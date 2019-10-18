@@ -23,7 +23,7 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA.
 
-You can also find a large number of examples in the CUDA SDK `/usr/local/depot/cuda-8.0/samples`. In addition, there are a wealth
+You can also find a large number of examples in the CUDA SDK `$(HOME)/NVIDIA_CUDA-10.1_Samples`. In addition, there are a wealth
 of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
 
 Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the K80 GPUs you will used in this assignment.  K80 GPUs support CUDA compute capability 3.7.
@@ -114,7 +114,7 @@ void exclusive_scan_recursive(int* start, int* end, int* output, int* scratch) {
 }
 ~~~~
 
-While the above code expresses our intent well and recursion is in fact supported on modern GPUs, its use can lead to fairly low performance. Instead, we can express the algorithm in an iterative manner. The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/winter19/lecture/dataparallel/slide_016> 
+While the above code expresses our intent well and recursion is in fact supported on modern GPUs, its use can lead to fairly low performance. Instead, we can express the algorithm in an iterative manner. The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall19/lecture/dataparallel/slide_017> 
 
 ~~~~
 void exclusive_scan_iterative(int* start, int* end, int* output) {
