@@ -15,7 +15,7 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 ## Environment Setup ##
 
-1. You will develop this assignment on GPU-enabled VMs on the Google Cloud Platform. Please follow the instructions in [cloudreadme.md](cloudreadme.md) for setting up a machine to run the assignment.
+1. You will develop this assignment on GPU-enabled VMs on the Google Cloud Platform. Please follow the instructions in [cloud_readme.md](cloud_readme.md) for setting up a machine to run the assignment.
 
 2. Download the Assignment starter code from the course Github using:
 
