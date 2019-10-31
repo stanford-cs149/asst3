@@ -340,7 +340,7 @@ Along with your code, we would like you to hand in a clear, high-level descripti
 
 Aspects of your work that you should mention in the write-up include:
 
-1. Include both partners names and andrew id's at the top of your write-up.
+1. Include both partners names and SUNet id's at the top of your write-up.
 2. Replicate the score table generated for your solution and specify which machine you ran your code on.
 3. Describe how you decomposed the problem and how you assigned work to CUDA thread blocks and threads (and maybe even warps).
 4. Describe where synchronization occurs in your solution.
