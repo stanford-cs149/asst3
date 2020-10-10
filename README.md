@@ -111,7 +111,7 @@ void exclusive_scan_recursive(int* start, int* end, int* output, int* scratch) {
 }
 ~~~~
 
-While the above code expresses our intent well and recursion is in fact supported on modern GPUs, its use can lead to fairly low performance. Instead, we can express the algorithm in an iterative manner. The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall19/lecture/dataparallel/slide_017> 
+While the above code expresses our intent well and recursion is in fact supported on modern GPUs, its use can lead to fairly low performance. Instead, we can express the algorithm in an iterative manner. The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall20/lecture/dataparallel/slide_17> 
 
 ~~~~
 void exclusive_scan_iterative(int* start, int* end, int* output) {
@@ -315,18 +315,18 @@ We provide a total of five circle datasets you will be graded on.  However, in o
 ------------
 Score table:
 ------------
--------------------------------------------------------------------------
-| Scene Name      | Ref Time (T_ref) | Your Time (T)  | Score           |
--------------------------------------------------------------------------
-| rgb             | 0.3624           | 0.3988          | 12             |
-| rand10k         | 11.7187          | 11.7432         | 12             |
-| rand100k        | 115.3621         | 115.2986        | 12             |
-| pattern         | 1.0789           | 1.1021          | 12             |
-| snowsingle      | 64.3913          | 64.4252         | 12             |
-| biglittle       | 77.9794          | 77.9189         | 12             |
--------------------------------------------------------------------------
-|                                    | Total score:    | 72/72          |
--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+| Scene Name      | Ref Time (T_ref) | Your Time (T)   | Score           |
+--------------------------------------------------------------------------
+| rgb             | 0.4897           | 0.4922          | 12              |
+| rand10k         | 17.8165          | 17.7977         | 12              |
+| rand100k        | 124.5394         | 148.5078        | 12              |
+| pattern         | 1.0989           | 1.1125          | 12              |
+| snowsingle      | 66.5748          | 66.5446         | 12              |
+| biglittle       | 71.2591          | 71.2128         | 12              |
+--------------------------------------------------------------------------
+|                                    | Total score:    | 72/72           |
+--------------------------------------------------------------------------
 ~~~~
 
 Note: on some runs, you *may* receive credit for some of these scenes, since the provided renderer's runtime is non-deterministic sometimes it might be correct.  This doesn't change the fact that the current CUDA renderer is in general incorrect.  
