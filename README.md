@@ -84,37 +84,7 @@ We want you to implement `find_repeats` by first implementing parallel exclusive
 
 Exlusive prefix sum takes an array `A` and produces a new array `output` that has, at each index `i`, the sum of all elements up to but not including `A[i]`. For example, given the array `A={1,4,6,8,2}`, the output of exclusive prefix sum `output={0,1,5,11,19}`.
 
-The following code is a recursive C-code implementation of a work-efficient, parallel implementation of scan. (We discussed this algorithm in class.)  For more detail on prefix-sum (and its more general relative, `scan`), we recommend you take a look at these [excellent course notes](https://drive.google.com/file/d/0B4z2gzEmkDDCa1UyMmh3aktzVGs/view) (a discussion of scan begins on page 102).  __Note: Some of you may wish to skip the following recursive implementation and jump to the iterative version below.__
-
-~~~~
-void exclusive_scan_recursive(int* start, int* end, int* output, int* scratch) {
-
-    int N = end - start;
-
-    if (N == 0)
-        return;
-    else if (N == 1) {
-        output[0] = 0;
-        return;
-    }
-
-    // sum pairs in parallel.
-    for (int i = 0; i < N/2; i++)
-       output[i] = start[2*i] + start[2*i+1];
-
-    // prefix sum on the compacted array.
-    exclusive_scan_recursive(output, output + N/2, scratch, scratch + (N/2));
-
-    // finally, update the odd values in parallel.
-    for (int i = 0; i < N; i++) {
-        output[i] = scratch[i/2];
-        if (i % 2)
-            output[i] += start[i-1];
-    }
-}
-~~~~
-
-While the above code expresses our intent well and recursion is in fact supported on modern GPUs, its use can lead to fairly low performance. Instead, we can express the algorithm in an iterative manner. The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall19/lecture/dataparallel/slide_017> 
+The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall19/lecture/dataparallel/slide_017> 
 
 ~~~~
 void exclusive_scan_iterative(int* start, int* end, int* output) {
@@ -123,7 +93,7 @@ void exclusive_scan_iterative(int* start, int* end, int* output) {
     memmove(output, start, N*sizeof(int));
     
     // upsweep phase
-    for (int two_d = 1; two_d < N/2; two_d*=2) {
+    for (int two_d = 1; two_d <= N/2; two_d*=2) {
         int two_dplus1 = 2*two_d;
         parallel_for (int i = 0; i < N; i += two_dplus1) {
             output[i+two_dplus1-1] += output[i+two_d-1];
