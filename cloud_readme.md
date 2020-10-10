@@ -20,7 +20,7 @@ NOTE #3: __Update your GPU quota (all regions) under IAM & admin ASAP, as new pr
 ![Storage](handout/choose_storage.png?raw=true)
 
 5. AWS will ask you to select a key pair. Click the first dropdown and choose `Create a new key pair` and give it whatever name you'd like. This will download a keyfile to your computer called `<key_name>.pem` which you will use to login to the VM instance you are about to create. Finally, click `Launch Instances`.
-![Key Pair](handout/new_key_pari.png?raw=true)
+![Key Pair](handout/new_key_pair.png?raw=true)
 
 __Note: `p2.xlarge` instances cost $0.90 / hour, so leaving one running for a whole day will consume $21.60 worth of your AWS coupon.__
 
