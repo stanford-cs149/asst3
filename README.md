@@ -15,16 +15,13 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 ## Environment Setup ##
 
-1. You will develop this assignment on GPU-enabled VMs on the Google Cloud Platform. Please follow the instructions in [cloud_readme.md](cloud_readme.md) for setting up a machine to run the assignment.
+1. You will develop this assignment on GPU-enabled VMs on Amazon Web Services (AWS). Please follow the instructions in [cloud_readme.md](cloud_readme.md) for setting up a machine to run the assignment.
 
 2. Download the Assignment starter code from the course Github using:
 
 `git clone https://github.com/stanford-cs149/asst3`
 
-The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA.
-
-You can also find a large number of examples in the CUDA SDK `$(HOME)/NVIDIA_CUDA-10.1_Samples`. In addition, there are a wealth
-of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
+The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA. There are a wealth of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
 
 Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the K80 GPUs you will used in this assignment.  K80 GPUs support CUDA compute capability 3.7.
 
