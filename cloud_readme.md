@@ -2,12 +2,8 @@
 
 For performance testing, you will need to run it on a VM instance on Amazon Web Services (AWS). We've already sent you student coupons that you can use for billing purposes. Here are the steps for how to get setup for running on AWS.
 
-NOTE: For those working in teams, it might be desirable for both students to use the same virtual machine. To do so, only one of you should first create the VM instance following the instructions below. Then, follow the instructions at https://cloud.google.com/compute/docs/access/granting-access-to-resources to grant access to your partner.
+NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the day to avoid burning through credits overnight!__
 
-NOTE #2: __Please don't forget to SHUT DOWN your instances when you're done with your work for the day!  The GPU-enabled cloud VM instances you create for this assignment cost approximately $0.50 per hour.  Leaving it on accidentally for a day could quickly eat up your $50 per student quota for the assignment.__
-
-NOTE #3: __Update your GPU quota (all regions) under IAM & admin ASAP, as new projects need approval for GPU quota in GCP which could block you from starting.__ See https://cloud.google.com/compute/docs/gpus/#restrictions for more details.
-   
 ### Creating a VM with a GPU ###
       
 1. Now you're ready to create a VM instance. Click on the button that says `Launch Instances`. Choose the `Ubuntu Server 20.04 LTS (HVM), SSD Volume Type` AMI:
@@ -31,6 +27,19 @@ Once you have the IP address, you can login to the instance by running this comm
 ssh -i path/to/key_name.pem ubuntu@<public_ip_address>
 ~~~~
 
+### Setting up the VM environment ###
+
+We have included a convenience script, __install.sh__, which performs steps 5,6 and 7 for you. To run it, do:
+
+~~~~
+chmod +x install.sh
+sudo ./install.sh
+~~~~
+
+If for some reason the script does not work, the manual instructions follow:
+
+### Manually setting up the VM environment ###
+
 5. Once you SSH into your VM instance, you'll want to install whatever software you need to make the machine a useful development environment for you.  For example we recommend:
 ~~~~
 sudo apt update
@@ -44,14 +53,14 @@ sudo apt install vim
 
 ~~~~
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
-sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
 sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
 sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
 sudo apt-get update
 sudo apt-get -y install cuda
 ~~~~
  
-5. `nvcc` is the NVIDIA CUDA compiler. The default install locates CUDA binaries in `/usr/local/cuda/bin/`, so you'll want to add this directory to your path.  For example, from a bash shell that would be:
+7. `nvcc` is the NVIDIA CUDA compiler. The default install locates CUDA binaries in `/usr/local/cuda/bin/`, so you'll want to add this directory to your path.  For example, from a bash shell that would be:
 
 ~~~~
 export PATH=$PATH:/usr/local/cuda/bin
@@ -59,7 +68,9 @@ export PATH=$PATH:/usr/local/cuda/bin
 
 In general we recommend that you perform this `$PATH` update on login, so you can add this line to the end of your `.bashrc` file.  Don't forget to `source .bashrc` if you want to have this modification take effect without logging out and back in to the instance.
 
-At this point CUDA should be installed and you should be able to run the `nvidia-smi` command to make sure everything is setup correctly.  The result of the command should indicate that your VM has one NVIDIA K80 GPU.
+### Confirming that CUDA has been installed ###
+
+Suppose you have carried out steps 5-7 or run the __install.sh__ script. At this point CUDA should be installed and you should be able to run the `nvidia-smi` command to make sure everything is setup correctly.  The result of the command should indicate that your VM has one NVIDIA K80 GPU.
 
 ~~~~
 ubuntu@ip-172-31-62-219:~$ nvidia-smi
