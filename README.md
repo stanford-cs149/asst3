@@ -31,7 +31,7 @@ For C++ questions (like what does the _virtual_ keyword mean), the [C++ Super-FA
 
 To gain a bit of practice writing CUDA programs your warm-up task is to re-implement the SAXPY function
 from Assignment 1 in CUDA. Starter code for this part of the assignment is located in the `/saxpy` directory
-of the assignment tarball.
+of the assignment repository.
 
 Please finish off the implementation of SAXPY in the function `saxpyCuda` in `saxpy.cu`. You will need to allocate device global memory arrays and copy the contents of the host input arrays `X`, `Y`, and `result` into CUDA device memory prior to performing the computation. After the CUDA computation is complete, the result must be copied back into host memory. Please see the definition of `cudaMemcpy` function in Section 3.2.2 of the Programmer's Guide, or take a look at the helpful tutorial pointed to in the assignment starter code.
 
@@ -81,7 +81,7 @@ We want you to implement `find_repeats` by first implementing parallel exclusive
 
 Exlusive prefix sum takes an array `A` and produces a new array `output` that has, at each index `i`, the sum of all elements up to but not including `A[i]`. For example, given the array `A={1,4,6,8,2}`, the output of exclusive prefix sum `output={0,1,5,11,19}`.
 
-The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall19/lecture/dataparallel/slide_017> 
+The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall20/lecture/dataparallel/slide_17> 
 
 ~~~~
 void exclusive_scan_iterative(int* start, int* end, int* output) {
@@ -279,7 +279,7 @@ Program Options:
 
 **Checker code:** To detect correctness of the program, `render` has a convenient `--check` option. This option runs the sequential version of the reference CPU renderer along with your CUDA renderer and then compares the resulting images to ensure correctness. The time taken by your CUDA renderer implementation is also printed.
 
-We provide a total of five circle datasets you will be graded on.  However, in order to receive full credit, your code must pass all of our correctness-tests.   To check the correctness and performance score of your code, run **`./checker.pl`** in the `/render` directory. If you run it on the starter code, the program will print a table like the following, along with the results of our entire test set: 
+We provide a total of five circle datasets you will be graded on.  However, in order to receive full credit, your code must pass all of our correctness-tests.  To check the correctness and performance score of your code, run **`./checker.py`** (notice the .py extension) in the `/render` directory. If you run it on the starter code, the program will print a table like the following, along with the results of our entire test set: 
 
 ~~~~
 ------------
@@ -288,20 +288,20 @@ Score table:
 --------------------------------------------------------------------------
 | Scene Name      | Ref Time (T_ref) | Your Time (T)   | Score           |
 --------------------------------------------------------------------------
-| rgb             | 0.5165           | 0.5156          | 12              |
-| rand10k         | 17.7579          | 17.757          | 12              |
-| rand100k        | 113.4672         | 124.3526        | 12              |
-| pattern         | 1.4962           | 1.4943          | 12              |
-| snowsingle      | 91.4262          | 91.4014         | 12              |
-| biglittle       | 97.9552          | 97.9517         | 12              |
+| rgb             | 0.3723           | (F)             | 0               |
+| rand10k         | 12.6642          | (F)             | 0               |
+| rand100k        | 113.0448         | (F)             | 0               |
+| pattern         | 1.1075           | (F)             | 0               |
+| snowsingle      | 66.5304          | (F)             | 0               |
+| biglittle       | 71.2323          | (F)             | 0               |
 --------------------------------------------------------------------------
-|                                    | Total score:    | 72/72           |
+|                                    | Total score:    | 0/72            |
 --------------------------------------------------------------------------
 ~~~~
 
-Note: on some runs, you *may* receive credit for some of these scenes, since the provided renderer's runtime is non-deterministic sometimes it might be correct.  This doesn't change the fact that the current CUDA renderer is in general incorrect.  
+Note: on some runs, you *may* receive credit for some of these scenes, since the provided renderer's runtime is non-deterministic sometimes it might be correct. This doesn't change the fact that the current CUDA renderer is in general incorrect.  
 
-"Ref time" is the performance of our reference solution on your current machine (in the provided `render_ref` executable). "Your time" is the performance of your current CUDA renderer solution. Your grade will depend on the performance of your implementation compared to these reference implementations (see Grading Guidelines).  
+"Ref time" is the performance of our reference solution on your current machine (in the provided `render_ref` executable). "Your time" is the performance of your current CUDA renderer solution, where an `(F)` indicates an incorrect solution. Your grade will depend on the performance of your implementation compared to these reference implementations (see Grading Guidelines).  
 
 Along with your code, we would like you to hand in a clear, high-level description of how your implementation works as well as a brief description of how you arrived at this solution. Specifically address approaches you tried along the way, and how you went about determining how to optimize your code (For example, what measurements did you perform to guide your optimization efforts?).
 
@@ -397,6 +397,3 @@ Please submit your work using Gradescope.
 2. __Please submit your code under the folder `code`.__  Just submit your full Assignment 3 source tree. To keep submission sizes small, please do a `make clean` in the program directories prior to creating the archive, and remove any residual output images, etc. Before submitting the source files, make sure that all code is compilable and runnable! We should be able to simply make, then execute your programs in `/saxpy`, `/scan`, and `/render` without manual intervention. 
 
 Our grading scripts will rerun the checker code allowing us to verify your score matches what you submitted in the `writeup.pdf`.  We might also try to run your code on other datasets to further examine its correctness.
-
-
-
