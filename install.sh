@@ -14,4 +14,4 @@ apt-get update
 apt-get install -y g++ make cuda freeglut3-dev
 
 # Update PATH to include bin directory containing nvcc
-echo "export PATH=\$PATH:/usr/local/cuda/bin" >> ~/.bashrc
+echo "export PATH=\$PATH:/usr/local/cuda/bin" >> /home/ubuntu/.bashrc
