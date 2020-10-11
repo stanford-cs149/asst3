@@ -62,10 +62,10 @@ void saxpyCuda(int N, float alpha, float* xarray, float* yarray, float* resultar
     // above) but you cannot access the contents these buffers from
     // this thread. CPU threads cannot issue loads and stores from GPU
     // memory!
-    float* device_x;
-    float* device_y;
-    float* device_result;
-
+    float* device_x = nullptr;
+    float* device_y = nullptr;
+    float* device_result = nullptr;
+    
     //
     // CS149 TODO: allocate device memory buffers on the GPU using cudaMalloc.
     //
@@ -94,7 +94,7 @@ void saxpyCuda(int N, float alpha, float* xarray, float* yarray, float* resultar
 
     
     // end timing after result has been copied back into host memory
-    //double endTime = CycleTimer::currentSeconds();
+    double endTime = CycleTimer::currentSeconds();
 
     cudaError_t errCode = cudaPeekAtLastError();
     if (errCode != cudaSuccess) {

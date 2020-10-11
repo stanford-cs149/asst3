@@ -1,6 +1,6 @@
 # Assignment 3: A Simple CUDA Renderer #
 
-**Due:  Fri Nov 1, 11:59PM PST**
+**Due:  Fri Oct 23, 11:59PM PST**
 
 **100 points total**
 
@@ -15,16 +15,13 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 ## Environment Setup ##
 
-1. You will develop this assignment on GPU-enabled VMs on the Google Cloud Platform. Please follow the instructions in [cloud_readme.md](cloud_readme.md) for setting up a machine to run the assignment.
+1. You will develop this assignment on GPU-enabled VMs on Amazon Web Services (AWS). Please follow the instructions in [cloud_readme.md](cloud_readme.md) for setting up a machine to run the assignment.
 
 2. Download the Assignment starter code from the course Github using:
 
 `git clone https://github.com/stanford-cs149/asst3`
 
-The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA.
-
-You can also find a large number of examples in the CUDA SDK `$(HOME)/NVIDIA_CUDA-10.1_Samples`. In addition, there are a wealth
-of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
+The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA. There are a wealth of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
 
 Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the K80 GPUs you will used in this assignment.  K80 GPUs support CUDA compute capability 3.7.
 
@@ -288,18 +285,18 @@ We provide a total of five circle datasets you will be graded on.  However, in o
 ------------
 Score table:
 ------------
--------------------------------------------------------------------------
-| Scene Name      | Ref Time (T_ref) | Your Time (T)  | Score           |
--------------------------------------------------------------------------
-| rgb             | 0.3624           | 0.3988          | 12             |
-| rand10k         | 11.7187          | 11.7432         | 12             |
-| rand100k        | 115.3621         | 115.2986        | 12             |
-| pattern         | 1.0789           | 1.1021          | 12             |
-| snowsingle      | 64.3913          | 64.4252         | 12             |
-| biglittle       | 77.9794          | 77.9189         | 12             |
--------------------------------------------------------------------------
-|                                    | Total score:    | 72/72          |
--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+| Scene Name      | Ref Time (T_ref) | Your Time (T)   | Score           |
+--------------------------------------------------------------------------
+| rgb             | 0.4897           | 0.4922          | 12              |
+| rand10k         | 17.8165          | 17.7977         | 12              |
+| rand100k        | 124.5394         | 148.5078        | 12              |
+| pattern         | 1.0989           | 1.1125          | 12              |
+| snowsingle      | 66.5748          | 66.5446         | 12              |
+| biglittle       | 71.2591          | 71.2128         | 12              |
+--------------------------------------------------------------------------
+|                                    | Total score:    | 72/72           |
+--------------------------------------------------------------------------
 ~~~~
 
 Note: on some runs, you *may* receive credit for some of these scenes, since the provided renderer's runtime is non-deterministic sometimes it might be correct.  This doesn't change the fact that the current CUDA renderer is in general incorrect.  
