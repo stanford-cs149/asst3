@@ -34,6 +34,7 @@ We have included a convenience script, __install.sh__, which performs steps 5,6 
 ~~~~
 chmod +x install.sh
 sudo ./install.sh
+source ~/.bashrc
 ~~~~
 
 If for some reason the script does not work, the manual instructions follow:
