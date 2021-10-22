@@ -50,7 +50,7 @@ sudo apt install vim
 
 ### Installing CUDA ###    
 
-6. Now you need to download the CUDA 10 runtime from NVIDIA. SSH into your AWS instance and run the following:
+6. Now you need to download the CUDA 11 runtime from NVIDIA. SSH into your AWS instance and run the following:
 
 ~~~~
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
