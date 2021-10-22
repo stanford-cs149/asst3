@@ -9,7 +9,7 @@ NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the
 1. Now you're ready to create a VM instance. Click on the button that says `Launch Instances`. Choose the `Ubuntu Server 20.04 LTS (HVM), SSD Volume Type` AMI:
 ![AMI Selection](handout/choose_ami.png?raw=true)
 
-2. Choose the `p2.xlarge` GPU Instance Type and then click `4. Add Storage` on the top bar: 
+2. Choose the `g4dn.xlarge` GPU Instance Type and then click `4. Add Storage` on the top bar: 
 ![GPU instance](handout/choose_instance.png?raw=true)
 
 3. Change the size of the `Root` volume to 64 GB to accomodate the packages we will need to install to make the instance functional for the assignment:
@@ -18,7 +18,7 @@ NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the
 5. AWS will ask you to select a key pair. Click the first dropdown and choose `Create a new key pair` and give it whatever name you'd like. This will download a keyfile to your computer called `<key_name>.pem` which you will use to login to the VM instance you are about to create. Finally, click `Launch Instances`.
 ![Key Pair](handout/new_key_pair.png?raw=true)
 
-__Note: `p2.xlarge` instances cost $0.90 / hour, so leaving one running for a whole day will consume $21.60 worth of your AWS coupon.__
+__Note: `gd4n.xlarge` instances cost $0.526 / hour, so leaving one running for a whole day will consume $21.60 worth of your AWS coupon.__
 
 4. Now that you've created your VM, you should be able to __SSH__ into it. You need the public IPv4 DNS name to SSH into it, which you can find on the instance page by clicking the `View Instances` button on the current page and then the instance ID for your created instance (note, it may take a moment for the instance to startup and be assigned an IP address):
 ![Public DNS Name](handout/public_dns.png?raw=true)
@@ -105,7 +105,9 @@ __Again, please don't forget to STOP your instances when you're done with your w
 1. If you received an error message stating that you are not able to launch additional resources in this region, AWS will validate your request. The validation process should take around 20 minutes. If that is not the case, please email AWS at aws-verification@amazon.com.
 ![Unavailable Region](handout/location_limit.png?raw=true)
 
-2. If you received and error message stating that you have requested more vCPU capacity than your current limit, please check your quota. Please submit a quota increase if you found that your quota is 0.
+2. If you received and error message stating that you have requested more vCPU capacity than your current limit, please check your quota.
 ![Quota Navigation Bar](handout/vCPU_trouble.png?raw=true)
 ![Quota Dashboard](handout/vCPU_dashboard.png?raw=true)
+![Quota Dashboard Search](handout/vCPU_dashboard_2.png?raw=true)
+If your Applied quota value is less than 4, please submit a request for quota increase and put 4 as your requested number of vCPUs.
 ![Quota Request](handout/quota_request.png?raw=true)
