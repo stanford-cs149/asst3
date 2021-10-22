@@ -23,7 +23,7 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA. There are a wealth of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
 
-Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the K80 GPUs you will used in this assignment.  K80 GPUs support CUDA compute capability 3.7.
+Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the NVIDIA T4 GPUs you will used in this assignment.  NVIDIA T4 GPUs support CUDA compute capability 7.5.
 
 For C++ questions (like what does the _virtual_ keyword mean), the [C++ Super-FAQ](https://isocpp.org/faq) is a great resource that explains things in a way that's detailed yet easy to understand (unlike a lot of C++ resources), and was co-written by Bjarne Stroustrup, the creator of C++!
 
@@ -67,7 +67,7 @@ __Question 1.__ What performance do you observe compared to the sequential CPU-b
 SAXPY (recall your results from saxpy on Program 5 from Assignment 1)? 
 
 __Question 2.__ Compare and explain the difference between the results
-provided by two sets of timers (timing only the kernel execution vs. timing the entire process of moving data to the GPU and back in addition to the kernel execution). Are the bandwidth values observed *roughly* consistent with the reported bandwidths available to the different components of the machine? (Hint: You should use the web to track down the memory bandwidth of an NVIDIA K80 GPU, and the maximum transfer speed of the computer's PCIe-x16 bus. It's [PCIe 3.0](https://en.wikipedia.org/wiki/PCI_Express), and a 16-lane bus connecting the CPU with the GPU.)
+provided by two sets of timers (timing only the kernel execution vs. timing the entire process of moving data to the GPU and back in addition to the kernel execution). Are the bandwidth values observed *roughly* consistent with the reported bandwidths available to the different components of the machine? (Hint: You should use the web to track down the memory bandwidth of an NVIDIA T4 GPU, and the maximum transfer speed of the computer's PCIe-x16 bus. It's [PCIe 3.0](https://en.wikipedia.org/wiki/PCI_Express), and a 16-lane bus connecting the CPU with the GPU.). Hint: <https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-t4/t4-tensor-core-datasheet-951643.pdf>
 
 ## Part 2: CUDA Warm-Up 2: Parallel Prefix-Sum (10 pts) ##
 
