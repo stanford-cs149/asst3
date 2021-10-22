@@ -18,7 +18,7 @@ NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the
 5. AWS will ask you to select a key pair. Click the first dropdown and choose `Create a new key pair` and give it whatever name you'd like. This will download a keyfile to your computer called `<key_name>.pem` which you will use to login to the VM instance you are about to create. Finally, click `Launch Instances`.
 ![Key Pair](handout/new_key_pair.png?raw=true)
 
-__Note: `gd4n.xlarge` instances cost $0.526 / hour, so leaving one running for a whole day will consume $21.60 worth of your AWS coupon.__
+__Note: `gd4n.xlarge` instances cost $0.526 / hour, so leaving one running for a whole day will consume $12.624 worth of your AWS coupon.__
 
 4. Now that you've created your VM, you should be able to __SSH__ into it. You need the public IPv4 DNS name to SSH into it, which you can find on the instance page by clicking the `View Instances` button on the current page and then the instance ID for your created instance (note, it may take a moment for the instance to startup and be assigned an IP address):
 ![Public DNS Name](handout/public_dns.png?raw=true)
