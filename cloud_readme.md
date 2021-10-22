@@ -74,20 +74,20 @@ In general we recommend that you perform this `$PATH` update on login, so you ca
 Suppose you have carried out steps 5-7 or run the __install.sh__ script. At this point CUDA should be installed and you should be able to run the `nvidia-smi` command to make sure everything is setup correctly.  The result of the command should indicate that your VM has one NVIDIA K80 GPU.
 
 ~~~~
-ubuntu@ip-172-31-62-219:~$ nvidia-smi
-Sat Oct 10 22:42:30 2020
+ubuntu@ip-172-31-20-116:~/asst3$ nvidia-smi 
+Fri Oct 22 18:08:14 2021       
 +-----------------------------------------------------------------------------+
-| NVIDIA-SMI 455.23.05    Driver Version: 455.23.05    CUDA Version: 11.1     |
+| NVIDIA-SMI 495.29.05    Driver Version: 495.29.05    CUDA Version: 11.5     |
 |-------------------------------+----------------------+----------------------+
 | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
 |                               |                      |               MIG M. |
 |===============================+======================+======================|
-|   0  Tesla K80           On   | 00000000:00:1E.0 Off |                    0 |
-| N/A   44C    P8    28W / 149W |      0MiB / 11441MiB |      0%      Default |
+|   0  Tesla T4            Off  | 00000000:00:1E.0 Off |                    0 |
+| N/A   50C    P0    27W /  70W |      0MiB / 15109MiB |      0%      Default |
 |                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
-
+                                                                               
 +-----------------------------------------------------------------------------+
 | Processes:                                                                  |
 |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
