@@ -20,11 +20,11 @@ NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the
 
 __Note: `p2.xlarge` instances cost $0.90 / hour, so leaving one running for a whole day will consume $21.60 worth of your AWS coupon.__
 
-4. Now that you've created your VM, you should be able to __SSH__ into it. You need the public IP address to SSH into it, which you can find on the instance page by clicking the `View Instances` button on the current page and then the instance ID for your created instance (note, it may take a moment for the instance to startup and be assigned an IP address):
-![IP Address](handout/ip_address.png?raw=true)
+4. Now that you've created your VM, you should be able to __SSH__ into it. You need the public IPv4 DNS name to SSH into it, which you can find on the instance page by clicking the `View Instances` button on the current page and then the instance ID for your created instance (note, it may take a moment for the instance to startup and be assigned an IP address):
+![Public DNS Name](handout/public_dns.png?raw=true)
 Once you have the IP address, you can login to the instance by running this command:
 ~~~~
-ssh -i path/to/key_name.pem ubuntu@<public_ip_address>
+ssh -i path/to/key_name.pem ubuntu@<public_dns_name>
 ~~~~
 
 ### Setting up the VM environment ###
@@ -100,3 +100,12 @@ Sat Oct 10 22:42:30 2020
 If you're confused about any of the steps, having problems with setting up your account or have any additional questions, reach us out on Piazza!
   
 __Again, please don't forget to STOP your instances when you're done with your work for the day!__
+
+### AWS Setup Trouble Shooting
+1. If you received an error message stating that you are not able to launch additional resources in this region, AWS will validate your request. The validation process should take around 20 minutes. If that is not the case, please email AWS at aws-verification@amazon.com.
+![Unavailable Region](handout/location_limit.png?raw=true)
+
+2. If you received and error message stating that you have requested more vCPU capacity than your current limit, please check your quota. Please submit a quota increase if you found that your quota is 0.
+![Quota Navigation Bar](handout/vCPU_trouble.png?raw=true)
+![Quota Dashboard](handout/vCPU_dashboard.png?raw=true)
+![Quota Request](handout/quota_request.png?raw=true)
