@@ -35,7 +35,7 @@ static inline int nextPow2(int n) {
 // N is the logical size of the input and output arrays, however
 // students can assume that both the start and result arrays we
 // allocated with next power-of-two sizes as described by the comments
-// in cudaScan().  This is helpful, since your parallel segmented scan
+// in cudaScan().  This is helpful, since your parallel scan
 // will likely write to memory locations beyond N, but of course not
 // greater than N rounded up to the next power of 2.
 //
@@ -62,7 +62,7 @@ void exclusive_scan(int* input, int N, int* result)
 // cudaScan --
 //
 // This function is a timing wrapper around the student's
-// implementation of segmented scan - it copies the input to the GPU
+// implementation of scan - it copies the input to the GPU
 // and times the invocation of the exclusive_scan() function
 // above. Students should not modify it.
 double cudaScan(int* inarray, int* end, int* resultarray)
