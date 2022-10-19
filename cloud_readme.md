@@ -58,10 +58,10 @@ sudo apt-get install vim
 8. Now you need to download the CUDA 11 runtime from NVIDIA. SSH into your AWS instance and run the following:
 
 ~~~~
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
-sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
-sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
-sudo add-apt-repository "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /"
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
 sudo apt-get update
 sudo apt-get -y install cuda
 ~~~~ 
@@ -79,21 +79,24 @@ In general we recommend that you perform this `$PATH` update on login, so you ca
 10. Suppose you have carried out steps 7-9 or run the __install.sh__ script. At this point CUDA should be installed and you should be able to run the `nvidia-smi` command to make sure everything is setup correctly.  The result of the command should indicate that your VM has one NVIDIA K80 GPU.
 
 ~~~~
-kayvonf@asst4demo:~$ nvidia-smi
-Sat Feb 16 19:46:27 2019       
+ubuntu@ip-172-31-20-116:~/asst3$ nvidia-smi 
+Fri Oct 22 18:08:14 2021       
 +-----------------------------------------------------------------------------+
-| NVIDIA-SMI 410.79       Driver Version: 410.79       CUDA Version: 10.0     |
+| NVIDIA-SMI 495.29.05    Driver Version: 495.29.05    CUDA Version: 11.5     |
 |-------------------------------+----------------------+----------------------+
 | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
 |===============================+======================+======================|
-|   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |
-| N/A   50C    P0    68W / 149W |      0MiB / 11441MiB |    100%      Default |
+|   0  Tesla T4            Off  | 00000000:00:1E.0 Off |                    0 |
+| N/A   50C    P0    27W /  70W |      0MiB / 15109MiB |      0%      Default |
+|                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
                                                                                
 +-----------------------------------------------------------------------------+
-| Processes:                                                       GPU Memory |
-|  GPU       PID   Type   Process name                             Usage      |
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
 |=============================================================================|
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
