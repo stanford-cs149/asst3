@@ -26,7 +26,19 @@ __Note: `g4dn.xlarge` instances cost $0.526 / hour, so leaving one running for a
 6. Now that you've created your VM, you should be able to __SSH__ into it. You need the public IPv4 DNS name to SSH into it, which you can find by navigating to your instance's page and then clicking the `Connect` button, followed by selecting the SSH tab (note, it may take a moment for the instance to startup and be assigned an IP address):
 ![Connect](handout/connect.png?raw=true)
 
-Make sure you follow the instructions to change the permissions of your key file by running `chmod 400 path/to/key_name.pem`.
+Make sure you follow the instructions to change the permissions of your key file as follows. 
+
+a. For Linux / MacOS terminal:
+~~~~
+chmod 400 path/to/key_name.pem
+~~~~
+b. For Windows Powershell:  Replace only `your_key_name.pem` with the name of your `.pem` file.
+~~~~
+icacls.exe your_key_name.pem /reset
+icacls.exe your_key_name.pem /grant:r "$($env:username):(r)"
+icacls.exe your_key_name.pem /inheritance:r
+~~~~
+
 Once you have the IP address, you can login to the instance by running this command:
 ~~~~
 ssh -i path/to/key_name.pem ubuntu@<public_dns_name>
