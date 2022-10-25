@@ -316,14 +316,15 @@ Aspects of your work that you should mention in the write-up include:
 
 ### Grading Guidelines ###
 
-* The write-up for the assignment is worth 13 points.
+* The write-up for the assignment is worth 7 points.
 * Your implementation is worth 72 points. These are equally divided into 12 points per scene as follows:
- - 2 correctness points per scene. 
- - 10 performance points per scene (only obtainable if the solution is correct).  Your performance will be graded with respect to the performance of a provided benchmark reference enderer, T<sub>ref</sub>: 
- - No performance points will be given for solutions having time (T) 10 times the magnitude of T<sub>ref</sub>. 
- - Full performance points will be given for solutions within 20% of the optimized solution ( T < 1.20 * T<sub>ref</sub> )
- - For other values of T (for 1.20 T<sub>ref</sub> <= T < 10 * T<sub>ref</sub>), your performance score on a scale 1 to 10 will be calculated as: `10 * T_ref / T`.
- 
+    - 2 correctness points per scene. 
+    - 10 performance points per scene (only obtainable if the solution is correct).  Your performance will be graded with respect to the performance of a provided benchmark reference enderer, T<sub>ref</sub>: 
+        - No performance points will be given for solutions having time (T) 10 times the magnitude of T<sub>ref</sub>. 
+        - Full performance points will be given for solutions within 20% of the optimized solution ( T < 1.20 * T<sub>ref</sub> )
+        - For other values of T (for 1.20 T<sub>ref</sub> <= T < 10 * T<sub>ref</sub>), your performance score on a scale 1 to 10 will be calculated as: `10 * T_ref / T`.
+* Your implementation's performance on the class leaderboard is worth the final 6 points. Submission and grading details for the leaderboard will be detailed in a subsequent Ed post.
+
 * Up to five points extra credit (instructor discretion) for solutions that achieve significantly greater performance than required. Your write up must clearly explain your approach thoroughly.
 * Up to five points extra credit (instructor discretion) for a high-quality parallel CPU-only renderer implementation that achieves good utilization of all cores and SIMD vector units of the cores. Feel free to use any tools at your disposal (e.g., SIMD intrinsics, ISPC, pthreads).  To receive credit you should analyze the performance of your GPU and CPU-based solutions and discuss the reasons for differences in implementation choices made.
  
