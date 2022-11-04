@@ -1,0 +1,10 @@
+---------------------------------------------------------
+Found 1 CUDA devices
+Device 0: Tesla T4
+   SMs:        40
+   Global mem: 15110 MB
+   CUDA Cap:   7.5
+---------------------------------------------------------
+Array size: 1000000
+Student GPU time: 1.274 ms
+Find_repeats outputs are correct!

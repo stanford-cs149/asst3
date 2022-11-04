@@ -25,31 +25,24 @@ static inline int nextPow2(int n) {
     n |= n >> 16;
     n++;
     return n;
+}  
+
+__global__ void scan_kernel_upsweep(int N, int* result, int span) {
+    int idx = (blockIdx.x * blockDim.x + threadIdx.x)*span*2;
+    int spanplus1 = 2*span;
+    if (idx >= 0 && (idx + spanplus1 - 1 < N)) {
+        result[idx + spanplus1 - 1] += result[idx + span - 1];
+    }
 }
 
-__global__ void scan_kernel_upsweep(int* input, int N, int* result, int two_d) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    int two_dplus1 = 2*two_d;
-    if (idx%two_dplus1==0 && idx < N) {
-        __syncthreads();
-        result[idx + two_dplus1 - 1] += result[idx + two_d - 1];
-        __syncthreads();
+__global__ void scan_kernel_downsweep(int N, int* result, int span) {
+    int idx = (blockIdx.x * blockDim.x + threadIdx.x)*span*2;
+    int spanplus1 = 2*span;
+    if (idx>=0 && (idx + spanplus1 - 1 < N)) {
+        int t = result[idx+span-1];
+        result[idx + span - 1] = result[idx + spanplus1 - 1];
+        result[idx + spanplus1 - 1] += t;
     }
-    if(idx == 0) result[N-1] = 0;
-}
-
-__global__ void scan_kernel_downsweep(int* input, int N, int* result, int two_d) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    int two_dplus1 = 2*two_d;
-
-    if (idx%two_dplus1==0 && idx < N) {
-        __syncthreads();
-        int t = result[idx+two_d-1];
-        result[idx + two_d - 1] = result[idx + two_dplus1 - 1];
-        result[idx + two_dplus1 - 1] += t;
-        __syncthreads();
-    }
-
 }
 
 // exclusive_scan --
@@ -80,14 +73,31 @@ void exclusive_scan(int* input, int N, int* result)
     // scan.
     
     //up-sweep phase
-    const int blocks = (N + THREADS_PER_BLOCK - 1)/THREADS_PER_BLOCK;
-    for(int two_d = 1; two_d <= N/2; two_d*=2) {
-        scan_kernel_upsweep<<<blocks, THREADS_PER_BLOCK>>>(input, N, result, two_d);
+    N = nextPow2(N);
+    int n_threads=0, blocks=0;
+    for(int span = 1; span <= N/2; span*=2) {
+        n_threads = N / span;
+        if(n_threads > THREADS_PER_BLOCK) {
+            blocks = (n_threads+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK;
+            n_threads = THREADS_PER_BLOCK;
+        }
+        else blocks = 1;
+        scan_kernel_upsweep<<<blocks, n_threads>>>(N, result, span);
+        cudaDeviceSynchronize();
     }
-    for(int two_d = N/2; two_d >= 1; two_d /= 2) {
-        scan_kernel_downsweep<<<blocks, THREADS_PER_BLOCK>>>(input, N, result, two_d);
+    cudaMemset((void*)(result+N-1), 0, 1* sizeof(int));
+    //down-sweep phase
+    for(int span = N/2; span >= 1; span /= 2) {
+        n_threads = N / span;
+        if(n_threads > THREADS_PER_BLOCK) {
+            blocks = (n_threads+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK;
+            n_threads = THREADS_PER_BLOCK;
+        }
+        else blocks = 1;
+        scan_kernel_downsweep<<<blocks, n_threads>>>(N, result, span);
+        cudaDeviceSynchronize();
     }
-}
+}  
 
 
 //
@@ -113,7 +123,7 @@ double cudaScan(int* inarray, int* end, int* resultarray)
     // the simplicity of a power of two only solution.
 
     int rounded_length = nextPow2(end - inarray);
-    
+
     cudaMalloc((void **)&device_result, sizeof(int) * rounded_length);
     cudaMalloc((void **)&device_input, sizeof(int) * rounded_length);
 
@@ -134,7 +144,9 @@ double cudaScan(int* inarray, int* end, int* resultarray)
     double endTime = CycleTimer::currentSeconds();
        
     cudaMemcpy(resultarray, device_result, (end - inarray) * sizeof(int), cudaMemcpyDeviceToHost);
-
+    for(int i = 0; i < (end-inarray);i++){
+        std::cout << resultarray[i] << std::endl;
+    }
     double overallDuration = endTime - startTime;
     return overallDuration; 
 }
@@ -172,6 +184,20 @@ double cudaScanThrust(int* inarray, int* end, int* resultarray) {
     return overallDuration; 
 }
 
+__global__ void find_equals(int* device_input, int* bools, int length) {
+    int idx = blockDim.x * blockIdx.x + threadIdx.x;
+    if(idx>=0 && idx < length-1) {
+        bools[idx] = device_input[idx+1]==device_input[idx]?1:0;
+    }
+}
+
+__global__ void find_idx(int* bools, int length, int* device_output) {
+    int idx = blockDim.x * blockIdx.x + threadIdx.x;
+    if(idx>=0 && idx < length-1) {
+        if(bools[idx+1]-bools[idx]==1) device_output[bools[idx]] = idx;
+    }
+}
+
 
 // find_repeats --
 //
@@ -193,7 +219,21 @@ int find_repeats(int* device_input, int length, int* device_output) {
     // must ensure that the results of find_repeats are correct given
     // the actual array length.
 
-    return 0; 
+    int N = nextPow2(length), blocks = 0;
+    int* bools = nullptr;
+    cudaMalloc((void**)&bools, N*sizeof(int));
+    int n_threads = length-1;
+    if(n_threads > THREADS_PER_BLOCK) {
+        blocks = (n_threads+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK;
+        n_threads = THREADS_PER_BLOCK;
+    }
+    else blocks = 1;
+    find_equals<<<blocks, n_threads>>>(device_input, bools, length);
+    exclusive_scan(bools, N, bools);
+    find_idx<<<blocks, n_threads>>>(bools, length, device_output);
+    int ans;
+    cudaMemcpy(&ans, bools+length-1,sizeof(int), cudaMemcpyDeviceToHost);
+    return ans;
 }
 
 
