@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     for (int i=0; i<N; i++) {
         xarray[i] = yarray[i] = i % 10;
         resultarray[i] = 0.f;
-   }
+    }
 
     printCudaInfo();
     

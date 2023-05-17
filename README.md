@@ -66,8 +66,49 @@ Note that in your measurements that include the time to transfer to and from the
 __Question 1.__ What performance do you observe compared to the sequential CPU-based implementation of
 SAXPY (recall your results from saxpy on Program 5 from Assignment 1)? 
 
+__Answer 1.__ 
+
+Effective BW by CUDA saxpy: 167.430 ms		[6.675 GB/s]
+
+Effective CUDA compyte time: 10.808 ms
+
+
 __Question 2.__ Compare and explain the difference between the results
 provided by two sets of timers (timing only the kernel execution vs. timing the entire process of moving data to the GPU and back in addition to the kernel execution). Are the bandwidth values observed *roughly* consistent with the reported bandwidths available to the different components of the machine? (You should use the web to track down the memory bandwidth of an NVIDIA T4 GPU. Hint: <https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-t4/t4-tensor-core-datasheet-951643.pdf>. The expected bandwidth of memory bus of AWS is 4 GB/s, which does not match that of a 16-lane [PCIe 3.0](https://en.wikipedia.org/wiki/PCI_Express). Several factors prevent peak bandwidth, including CPU motherboard chipset performance and whether or not the host CPU memory used as the source of the transfer is “pinned” — the latter allows the GPU to directly access memory without going through virtual memory address translation. If you are interested, you can find more info here: <https://kth.instructure.com/courses/12406/pages/optimizing-host-device-data-communication-i-pinned-host-memory>)
+
+__Answer 2.__
+
+First, we get the nvidia GPU pcie bankwidth:
+
+```bash
+$ lspci | grep -i nvidia
+
+01:00.0 VGA compatible controller: NVIDIA Corporation TU117M [GeForce GTX 1650 Mobile / Max-Q] (rev a1)
+
+$ lspci -n | grep -i 01:00.0
+
+01:00.0 0300: 10de:1f91 (rev a1)
+
+$ sudo lspci -n -d 10de:1f91 -vvv | grep -i width
+
+LnkCap:	Port #0, Speed 8GT/s, Width x16, ASPM L0s L1, Exit Latency L0s <512ns, L1 <16us
+LnkSta:	Speed 2.5GT/s (downgraded), Width x16 (ok)
+``` 
+
+Than we can calculate the theory bandwidth of PCIe bus is:
+$$
+bandwidth = 8GT/s * 16Lanes / 8 = 16GB/s
+$$
+However, the system actual memcpy bandwidth is about 7.1GB/s.
+
+So, we use the pinned memory tech to improve the band width.
+
+We can get the new result, which is closer to the theory bandwidth.
+```
+Effective BW by CUDA saxpy: 97.735 ms		[11.435 GB/s]
+Effective CUDA compyte time: 10.853 ms
+```
+
 
 ## Part 2: CUDA Warm-Up 2: Parallel Prefix-Sum (10 pts) ##
 
