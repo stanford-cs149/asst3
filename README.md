@@ -1,6 +1,6 @@
 # Assignment 3: A Simple CUDA Renderer #
 
-**Due:  Wed Nov 9, 11:59PM PST**
+**Due:  Thu Nov 2, 11:59PM PST**
 
 **100 points total**
 
@@ -209,7 +209,7 @@ An important detail of the renderer is that it renders __semi-transparent__ circ
    result_b = C_alpha * C_b + (1.0 - C_alpha) * P_b
 </pre>
 
-Notice that composition is not commutative (object X over Y does not look the same as object Y over X), so it's important that the render draw circles in a manner that follows the order they are provided by the application. (You can assume the application provides the circles in depth order.)  For example, consider the two images below where is blue circle is drawn OVER a green circle which is drawn OVER a red circle.  In the image on the left, the circles are drawn into the output image in the correct order.  In the image on the right, the circles are drawn in a different order, and the output image does not look correct.
+Notice that composition is not commutative (object X over Y does not look the same as object Y over X), so it's important that the render draw circles in a manner that follows the order they are provided by the application. (You can assume the application provides the circles in depth order.)  For example, consider the two images below where a blue circle is drawn OVER a green circle which is drawn OVER a red circle.  In the image on the left, the circles are drawn into the output image in the correct order.  In the image on the right, the circles are drawn in a different order, and the output image does not look correct.
 
 ![Ordering](handout/order.jpg?raw=true "The renderer must be careful to generate output that is the same as what is generated when sequentially drawing all circles in the order provided by the application.")
 
@@ -257,7 +257,7 @@ A good place to start would be to read through `cudaRenderer.cu` and convince yo
 
 We recommend that you:
 
-1. First rewrite the CUDA starter code implementation so that it is logically correct when running in parallel (we recommned an approach that does not require locks or synchronization)
+1. First rewrite the CUDA starter code implementation so that it is logically correct when running in parallel (we recommend an approach that does not require locks or synchronization)
 2. Then determine what performance problem is with your solution.
 3. At this point the real thinking on the assignment begins... (Hint: the circle-intersects-box tests provided to you in `circleBoxTest.cu_inl` are your friend.  You are encouraged to use these subroutines.)
 
@@ -319,7 +319,7 @@ Aspects of your work that you should mention in the write-up include:
 * The write-up for the assignment is worth 7 points.
 * Your implementation is worth 72 points. These are equally divided into 12 points per scene as follows:
     - 2 correctness points per scene. 
-    - 10 performance points per scene (only obtainable if the solution is correct).  Your performance will be graded with respect to the performance of a provided benchmark reference enderer, T<sub>ref</sub>: 
+    - 10 performance points per scene (only obtainable if the solution is correct).  Your performance will be graded with respect to the performance of a provided benchmark reference renderer, T<sub>ref</sub>: 
         - No performance points will be given for solutions having time (T) 10 times the magnitude of T<sub>ref</sub>. 
         - Full performance points will be given for solutions within 20% of the optimized solution ( T < 1.20 * T<sub>ref</sub> )
         - For other values of T (for 1.20 T<sub>ref</sub> <= T < 10 * T<sub>ref</sub>), your performance score on a scale 1 to 10 will be calculated as: `10 * T_ref / T`.
@@ -332,7 +332,7 @@ Aspects of your work that you should mention in the write-up include:
 
 Below are a set of tips and hints compiled from previous years.  Note that there are various ways to implement your renderer and not all hints may apply to your approach.
 
-* There are two potential axes of parallelism in this assignment. One axis is *parallelism across pixels* another is *parallelism across circles* (provided the ordering requirement is respected for overlapping circles).  Solutions will need to exploit both tpyes of parallelism, potentially at different parts of the computation.
+* There are two potential axes of parallelism in this assignment. One axis is *parallelism across pixels* another is *parallelism across circles* (provided the ordering requirement is respected for overlapping circles).  Solutions will need to exploit both types of parallelism, potentially at different parts of the computation.
 * The circle-intersects-box tests provided to you in `circleBoxTest.cu_inl` are your friend.  You are encouraged to use these subroutines.
 * The shared-memory prefix-sum operation provided in `exclusiveScan.cu_inl` may be valuable to you on this assignment (not all solutions may choose to use it). See the simple description of a prefix-sum [here](http://thrust.github.io/doc/group__prefixsums.html). We
 have provided an implementation of an exclusive prefix-sum on a __power-of-two-sized__ arrays in shared memory.  __The provided code does not work on non-power-of-two inputs and IT ALSO REQUIRES THAT THE NUMBER OF THREADS IN THE THREAD BLOCK BE THE SIZE OF THE ARRAY. PLEASE READ THE COMMENTS IN THE CODE.__
