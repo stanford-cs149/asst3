@@ -4,9 +4,11 @@ For performance testing, you will need to run this assignment on a VM instance o
 
 By now you should have already received the AWS login credentials for your group. If not, make a private Ed post and we will create login credentials for you.
 
-### Connect to VM ###
+NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the day!__
 
-1. Log in to the [AWS console](https://cs149-fall23.signin.aws.amazon.com/console) by entering your credentials. The Account ID is `744774966508` and the Account Alias `cs149-fall23`.
+## Connect to VM ##
+
+1. Log in to the [AWS console](https://cs149-fall23.signin.aws.amazon.com/console) by entering your credentials. The Account ID is `744774966508` and the Account Alias `cs149-fall23`. You can enter either one.
 
 2. Now you should see the AWS management console. Search for **Lightsail** in the top left search bar.
 ![console](handout/console.png?raw=true)
@@ -20,12 +22,37 @@ By now you should have already received the AWS login credentials for your group
 5. Select your instance. You should be able to start your instance by clicking "Start Computer" on the top right. After the instance is started, you can launch the GUI by clicking on **launch Ubuntu**
 ![instance](handout/instance.png?raw=true)
 
-__Note: `g4dn.xlarge` instances cost $0.526 / hour, so leaving one running for a whole day will consume $12.624 worth of your AWS coupon. Remmeber to shut off the instance when you're not using it!__
+__Note: The instance automatically shuts off after 15 minutes of inactivity (CPU usage < 2%), please make sure to save your work frequently!__
 
-6. Now you have logged into your instance! To copy your local files to the instance, directly drag them to the GUI. To open the terminal, click **Activities** at the top left in the GUI, and then click on the terminal icon at the bottom middle:
+6. Now you have logged into your instance! To copy your local files to the instance, simply drag them to the GUI. To open the terminal, click **Activities** at the top left in the GUI, and then click on the terminal icon at the bottom middle:
 ![GUI](handout/GUI.png?raw=true)
 
-### Setting up the VM environment ###
+__Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. We have provided some instructions below for how to SSH into the machine, which allows multiple persons to work on the machine at the same time.__
+
+### How to set up SSH connection to the VM ###
+You need a private key to ssh into the VM. We have posted the private key in an Ed post. Please download the key file to your local computer.
+After starting your Lightsail instance, you can find its IP address here. Try refresh the page if its empty.
+![ip](handout/ip.png?raw=true)
+
+To ssh into your VM, simply use the below command, where you need to replace `<path_to_your_key_file>` and `<VM_IP_address>` by corresponding values.
+~~~~
+ssh -i <path_to_the_key_file> ubuntu@<VM_IP_address>
+~~~~
+
+__Warning: Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. After SSH into the VM, please do the following things__
+
+1. Update PATH to include bin directory containing nvcc (only need to do once)
+~~~~
+echo "export PATH=\$PATH:/usr/local/cuda/bin" >> /home/ubuntu/.bashrc
+source /home/ubuntu/.bashrc
+~~~~
+
+2. Switch to and work in `lightsail-user` folder instead of `ubuntu` folder.
+~~~~
+cd /home/lightsail-user
+~~~~
+
+## Setting up the VM environment ##
 
 For this assignment, you don't need to do any additional setup. We have set up the machine for you! You can double check the cuda version, which should be 12.3. The GPU we are using is Tesla T4.
 ~~~~
@@ -52,12 +79,18 @@ Mon Oct 23 16:08:43 2023
 +---------------------------------------------------------------------------------------+
 ~~~~
 
-### Cloning the assignment ###
+## Cloning the assignment ##
 
-11. Clone the repository with the following command: `git clone https://github.com/stanford-cs149/asst3.git`.
+Clone the repository with the following command: `git clone https://github.com/stanford-cs149/asst3.git`.
 
-### Fetching your code from AWS ###
+## Fetching your code from AWS ##
 
-12. Once you've completed your assignment, you can download your code using the File Storage console by clicking on the double-arrow button at top left:
+Once you've completed your assignment, you can download your code using the File Storage console by clicking on the double-arrow button at top left:
 ![file_storage](handout/file_storage.png?raw=true)
 ![download](handout/download.png?raw=true)
+
+If you are using SSH, you can fetch your code using `scp` command like following in your local machine:
+~~~~
+scp -i <path_to_the_key_file> ubuntu@<VM_IP_address>:/path/to/file /path/to/local_file
+~~~~
+ 
