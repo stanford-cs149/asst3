@@ -21,7 +21,7 @@ HOSTNAME=$(shell hostname)
 LIBS       :=
 FRAMEWORKS :=
 
-NVCCFLAGS=-O3 -m64 --gpu-architecture compute_35
+NVCCFLAGS=-O3 -m64
 LIBS += GL glut cudart
 
 ifneq ($(wildcard /opt/cuda-8.0/.*),)
