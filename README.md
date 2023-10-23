@@ -27,16 +27,24 @@ Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-
 
 For C++ questions (like what does the _virtual_ keyword mean), the [C++ Super-FAQ](https://isocpp.org/faq) is a great resource that explains things in a way that's detailed yet easy to understand (unlike a lot of C++ resources), and was co-written by Bjarne Stroustrup, the creator of C++!
 
-__WARNING__
-To save resources, the VMs will auto stop after 15 minutes of < 2% CPU activity. This means that that the VM may close if you are not doing CPU intensive work such as writing code. Because of this, we recommend that you develop your code locally, and either copy your code into the machines manually or connecting your code to a _private_ git repo and pulling your commits to get your code on the machines. Using git is nice because you can go back to previous versions of your code.
+### WARNING ###
+
+To save resources, the VMs will auto stop after 15 minutes of < 2% CPU activity. 
+
+This means that that the VM will close if you are not doing CPU intensive work such as writing code. 
+
+Because of this, we recommend that you develop your code locally, and either copy your code into the machines manually or connect use git to pull your commits to the VM. Using git is nice because you can go back to previous versions of your code.
 
 If you have not set up a private git repo before here are some resources that should help you get started. Make sure that the github repo is private to ensure that you are not breaking the honor code. 
 
-Setting up git:
+Useful links to set up git:
 - [adding a remote repository](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories) to connect to your private repo.
 - [adding ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to set up a ssh key. We recommending doing this without a password and with the default name id_rsa.
 
-Once you have a ssh key and know how to connect to a remote repository. You should copy your private key to the server's .ssh folder (id_rsa in your .ssh) file and also create a file named config in the server and locally with the following lines.
+Once you have a ssh key and know how to connect to a remote repository, you will need to do the following two things to set up your environment. 
+
+1. Copy your private key to the server's .ssh folder (id_rsa in your .ssh) file
+2. Create a file named config in the server and locally with the following lines.
 ~~~
 Host github.com
     HostName github.com
