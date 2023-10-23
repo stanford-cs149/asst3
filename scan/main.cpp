@@ -29,7 +29,7 @@ void cpu_exclusive_scan(int* start, int* end, int* output) {
 
     // note to students: this C code can be helpful when debugging the
     // output of intermediate steps of your CUDA segmented scan.
-    // Uncomment the line abbove to use it as a reference.w
+    // Uncomment the line above to use it as a reference.
   
     int N = end - start;
     memmove(output, start, N*sizeof(int));
@@ -150,8 +150,7 @@ int main(int argc, char** argv) {
     if (test.compare("scan") == 0) { // test exclusive scan
       
         // run CUDA implementation
-        for (int i=0; i<1; i++) {
-      //for (int i=0; i<3; i++) {
+        for (int i=0; i<3; i++) {
             if (useThrust)
                 cudaTime = std::min(cudaTime, cudaScanThrust(inarray, inarray+N, resultarray));
             else

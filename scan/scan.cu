@@ -47,7 +47,7 @@ void exclusive_scan(int* input, int N, int* result)
 
     // CS149 TODO:
     //
-    // Implement your exclusive scan implementation here.  Keep input
+    // Implement your exclusive scan implementation here.  Keep in
     // mind that although the arguments to this function are device
     // allocated arrays, this is a function that is running in a thread
     // on the CPU.  Your implementation will need to make multiple calls

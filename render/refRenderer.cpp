@@ -281,7 +281,7 @@ lookupColor(float coord, float& r, float& g, float& b) {
 //
 // Computes the contribution of the specified circle to the
 // given pixel.  All values are provided in normalized space, where
-// the screen spans [0,2]^2.  The color/opacity of the circle is
+// the screen spans [0,1]^2.  The color/opacity of the circle is
 // computed at the pixel center.
 void
 RefRenderer::shadePixel(
