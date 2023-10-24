@@ -428,7 +428,7 @@ Therefore, while debugging, it's recommended that you wrap __all__ CUDA API call
 
 ## 3.4 Hand-in Instructions ##
 
-Please submit your work using Gradescope.
+Please submit your work using Gradescope. If you are working with a partner please remember to tag your partner on gradescope.
 
 1. __Please submit your writeup as the file `writeup.pdf`.__
 2. __Please submit your code under the folder `code`.__  Just submit your full Assignment 3 source tree. To keep submission sizes small, please do a `make clean` in the program directories prior to creating the archive, and remove any residual output images, etc. Before submitting the source files, make sure that all code is compilable and runnable! We should be able to simply make, then execute your programs in `/saxpy`, `/scan`, and `/render` without manual intervention. 
