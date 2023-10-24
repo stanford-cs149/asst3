@@ -39,7 +39,7 @@ To ssh into your VM, simply use the below command, where you need to replace `<p
 ssh -i <path_to_the_key_file> ubuntu@<VM_IP_address>
 ~~~~
 
-__Warning: Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. After SSH into the VM, please run the following command to switch user__
+__Warning: Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. After SSH into the VM, please run the following command to switch to `lightsail-user`__
 
 ~~~~
 sudo su - lightsail-user
