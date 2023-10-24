@@ -27,11 +27,68 @@ __Note: The instance automatically shuts off after 15 minutes of inactivity (CPU
 6. Now you have logged into your instance! To copy your local files to the instance, simply drag them to the GUI. To open the terminal, click **Activities** at the top left in the GUI, and then click on the terminal icon at the bottom middle:
 ![GUI](handout/GUI.png?raw=true)
 
-__Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. If you would like to have multiple persons using the instance at the same time, please use SSH, which involves a complicated setup (coming soon).__
+__Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. If you would like to have multiple persons using the instance at the same time, please use SSH, which involves a more complicated setup.__
 
 ### How to set up SSH connection to the VM ###
 
-Detailed instruction coming soon.
+**Warning:** Setting up SSH to LightSail instance is pretty complicated. This guide is freshly written, so if you encountered error at some step, or if you have found a better/easier way to SSH into the instance, please don't hesitate to make an Ed post/go to office hours!
+
+1. Install AWS CLI
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+2. Install jq
+https://jqlang.github.io/jq/download/
+
+3. First we need to generate access keys to configure the AWS CLI. Go to AWS console and select **Security Credentials** from the dropdown menu on the top right.
+![security_credentials](handout/security_credentials.png?raw=true)
+
+4. Scroll down and find "Access Keys" Section. Ignore all the other permission errors. Click on **Create access key**
+![accesskeys](handout/accesskeys.png?raw=true)
+
+5. In the next page, select use case as "Command Line Interface (CLI)" and select the confirmation box at the bottom. Skip the tag creation and you should get your access keys. Click the **Download .csv file** button and save it in your computer.
+![create_accesskey](handout/create_accesskey.png?raw=true)
+
+6. Now we are ready to use the access key to configure the AWS CLI. Open a terminal (or command line) and run
+~~~~
+aws configure
+~~~~
+Follow the instructions to input your Access key ID and Secret Access Key. Default region name should be **us-west-2** and default output format should be **json**.
+
+7. Now we are ready to generate the key pair for SSH. Use the following command to generate the key pair using AWS CLI. **Use your SUNet id as the key pair name**. Key pair details are saved into `pkp-details.json`
+~~~~
+aws lightsail create-key-pair --key-pair-name <your-sunet-id> > pkp-details.json
+~~~~
+
+8. Extract and save the public key from the json file. Change the permissions of the resulting key.
+~~~~
+cat pkp-details.json | jq -r '.privateKeyBase64' > cs149_pa3_private_key
+chmod 600 cs149_pa3_private_key
+~~~~
+
+9. Extract public key from the json file by using the following command, and then copy the output to your clipboard. Now we are ready to upload the public key to the instance.
+~~~~
+cat pkp-details.json | jq -r '.publicKeyBase64'
+~~~~
+
+10. Open the web GUI and start a terminal. First, we need to change our user to `ubuntu`
+~~~~
+sudo su - ubuntu
+~~~~
+
+11. Then open the ssh config file `.ssh/authorized_keys` using your favorite editor. We will use `nano` as an example. You should see there's already a key in this file. Add your key in a new line like the following. **The new line should start with only one "ssh-rsa"**. Save the file and exit after you finished editing.
+![ip](handout/authorized_keys.png?raw=true)
+
+12. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refresh the page if its empty.
+![ip](handout/ip.png?raw=true)
+
+13. Finally, you can SSH into your instance using the following command with your instance's IP address!
+~~~~
+ssh -i cs149_pa3_private_key ubuntu@<instance_ip_addr>
+~~~~
+Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. To avoid any file permission issues when you switch between web GUI and SSH, please run the following command to switch to `lightsail-user` everytime you SSH into the instance.
+~~~~
+sudo su - lightsail-user
+~~~~
 
 ## Setting up the VM environment ##
 
