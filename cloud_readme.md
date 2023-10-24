@@ -75,7 +75,7 @@ cat pkp-details.json | jq -r '.publicKeyBase64'
 sudo su - ubuntu
 ~~~~
 
-11. Then open the ssh config file `.ssh/authorized_keys` using your favorite editor. We will use `nano` as an example. You should see there's already a key in this file. Add your key in a new line like the following. **The new line should start with only one "ssh-rsa"**. Save the file and exit after you finished editing.
+11. Then open the ssh config file `.ssh/authorized_keys` using your favorite editor. We will use `nano` as an example. You might see there's already a key in this file. Add your key in a new line like the following. **The new line should start with only one "ssh-rsa"**. Save the file and exit after you finished editing.
 ![ip](handout/authorized_keys.png?raw=true)
 
 12. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refresh the page if its empty.
@@ -92,7 +92,22 @@ sudo su - lightsail-user
 
 ## Setting up the VM environment ##
 
-For this assignment, you don't need to do any additional setup. We have set up the machine for you! You can double check the cuda version, which should be 12.3. The GPU we are using is Tesla T4.
+1. We have provided an installation script in the assignment repo to install CUDA and other necessary packages. Clone the assignment repo to your instance using the following command.
+~~~~
+git clone https://github.com/stanford-cs149/asst3.git
+~~~~
+
+2. Run the installation script. If you encounter any issues, please make a post on Ed!
+~~~~
+./asst3/install.sh
+~~~~
+
+3. Run the following command to update your path.
+~~~~
+source ~/.bashrc
+~~~~
+
+4. After running the script, CUDA should be installed. You can double check the cuda version, which should be 12.3. The GPU we are using is Tesla T4.
 ~~~~
 lightsail-user@ip-172-26-12-153:~$ nvidia-smi
 Mon Oct 23 16:08:43 2023       
@@ -116,10 +131,6 @@ Mon Oct 23 16:08:43 2023
 |    0   N/A  N/A      2527      C   /usr/lib/x86_64-linux-gnu/dcv/dcvagent      249MiB |
 +---------------------------------------------------------------------------------------+
 ~~~~
-
-## Cloning the assignment ##
-
-Clone the repository with the following command: `git clone https://github.com/stanford-cs149/asst3.git`.
 
 ## Fetching your code from AWS ##
 
