@@ -27,7 +27,7 @@ __Note: The instance automatically shuts off after 15 minutes of inactivity (CPU
 6. Now you have logged into your instance! To copy your local files to the instance, simply drag them to the GUI. To open the terminal, click **Activities** at the top left in the GUI, and then click on the terminal icon at the bottom middle:
 ![GUI](handout/GUI.png?raw=true)
 
-__Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. We have provided some instructions below for how to SSH into the machine, which allows multiple persons to work on the machine at the same time.__
+__Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. If you would like to have multiple persons using the instance at the same time, please use SSH, which involves a complicated setup (coming soon).__
 
 ### How to set up SSH connection to the VM ###
 
