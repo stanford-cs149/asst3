@@ -39,17 +39,10 @@ To ssh into your VM, simply use the below command, where you need to replace `<p
 ssh -i <path_to_the_key_file> ubuntu@<VM_IP_address>
 ~~~~
 
-__Warning: Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. After SSH into the VM, please do the following things__
+__Warning: Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. After SSH into the VM, please run the following command to switch user__
 
-1. Update PATH to include bin directory containing nvcc (only need to do once)
 ~~~~
-echo "export PATH=\$PATH:/usr/local/cuda/bin" >> /home/ubuntu/.bashrc
-source /home/ubuntu/.bashrc
-~~~~
-
-2. Switch to and work in `lightsail-user` folder instead of `ubuntu` folder.
-~~~~
-cd /home/lightsail-user
+sudo su - lightsail-user
 ~~~~
 
 ## Setting up the VM environment ##
