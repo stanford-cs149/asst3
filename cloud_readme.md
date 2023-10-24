@@ -2,8 +2,6 @@
 
 For performance testing, you will need to run this assignment on a VM instance on Amazon Web Services (AWS). Here are the steps for how to get setup for running on AWS.
 
-By now you should have already received the AWS login credentials for your group. If not, make a private Ed post and we will create login credentials for you.
-
 NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the day!__
 
 ## Connect to VM ##
