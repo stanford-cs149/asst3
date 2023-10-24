@@ -30,20 +30,8 @@ __Note: The instance automatically shuts off after 15 minutes of inactivity (CPU
 __Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. We have provided some instructions below for how to SSH into the machine, which allows multiple persons to work on the machine at the same time.__
 
 ### How to set up SSH connection to the VM ###
-You need a private key to ssh into the VM. We have posted the private key in an Ed post. Please download the key file to your local computer.
-After starting your Lightsail instance, you can find its IP address here. Try refresh the page if its empty.
-![ip](handout/ip.png?raw=true)
 
-To ssh into your VM, simply use the below command, where you need to replace `<path_to_your_key_file>` and `<VM_IP_address>` by corresponding values.
-~~~~
-ssh -i <path_to_the_key_file> ubuntu@<VM_IP_address>
-~~~~
-
-__Warning: Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. After SSH into the VM, please run the following command to switch to `lightsail-user`__
-
-~~~~
-sudo su - lightsail-user
-~~~~
+Detailed instruction coming soon.
 
 ## Setting up the VM environment ##
 
