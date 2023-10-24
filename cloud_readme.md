@@ -97,8 +97,9 @@ sudo su - lightsail-user
 git clone https://github.com/stanford-cs149/asst3.git
 ~~~~
 
-2. Run the installation script. If you encounter any issues, please make a post on Ed!
+2. Add execute permissions, and run the installation script. If you encounter any issues, please make a post on Ed!
 ~~~~
+chmod +x ./asst3/install.sh
 ./asst3/install.sh
 ~~~~
 
