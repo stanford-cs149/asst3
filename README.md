@@ -355,7 +355,15 @@ Aspects of your work that you should mention in the write-up include:
 
 * Up to five points extra credit (instructor discretion) for solutions that achieve significantly greater performance than required. Your write up must clearly explain your approach thoroughly.
 * Up to five points extra credit (instructor discretion) for a high-quality parallel CPU-only renderer implementation that achieves good utilization of all cores and SIMD vector units of the cores. Feel free to use any tools at your disposal (e.g., SIMD intrinsics, ISPC, pthreads).  To receive credit you should analyze the performance of your GPU and CPU-based solutions and discuss the reasons for differences in implementation choices made.
- 
+
+So the total points for this project is as follows:
+* part 1 (5 points)
+* part 2 (10 points)
+* part 3 write up (7 points)
+* part 3 implementation (72 points)
+* part 3 leaderboard (6 points)
+* potential __extra__ credit (up to 10 points)
+
 ## Assignment Tips and Hints ##
 
 Below are a set of tips and hints compiled from previous years.  Note that there are various ways to implement your renderer and not all hints may apply to your approach.
@@ -420,7 +428,7 @@ Therefore, while debugging, it's recommended that you wrap __all__ CUDA API call
 
 ## 3.4 Hand-in Instructions ##
 
-Please submit your work using Gradescope.
+Please submit your work using Gradescope. If you are working with a partner please remember to tag your partner on gradescope.
 
 1. __Please submit your writeup as the file `writeup.pdf`.__
 2. __Please submit your code under the folder `code`.__  Just submit your full Assignment 3 source tree. To keep submission sizes small, please do a `make clean` in the program directories prior to creating the archive, and remove any residual output images, etc. Before submitting the source files, make sure that all code is compilable and runnable! We should be able to simply make, then execute your programs in `/saxpy`, `/scan`, and `/render` without manual intervention. 
