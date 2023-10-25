@@ -114,6 +114,6 @@ Once you've completed your assignment, you can download your code using the File
 
 If you are using SSH, you can fetch your code using `scp` command like following in your local machine:
 ~~~~
-scp -i <path_to_the_key_file> ubuntu@<VM_IP_address>:/path/to/file /path/to/local_file
+scp -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>:/path/to/file /path/to/local_file
 ~~~~
  
