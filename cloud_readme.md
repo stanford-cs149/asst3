@@ -30,64 +30,37 @@ __Note: The instance automatically shuts off after 15 minutes of inactivity (CPU
 __Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. If you would like to have multiple persons using the instance at the same time, please use SSH, which involves a more complicated setup.__
 
 ### How to set up SSH connection to the VM ###
+**Note:** The first step targets MacOS/Linux Users, if you are using windows, you can do a similar process to generate your keypair (https://www.purdue.edu/science/scienceit/ssh-keys-windows.html), and then Proceed to step 2. If you have any issues, please don't hesitate to make a Ed post or go to office hours!
 
-**Warning:** Setting up SSH to LightSail instance is pretty complicated. This guide is freshly written, so if you encountered error at some step, or if you have found a better/easier way to SSH into the instance, please don't hesitate to make an Ed post/go to office hours!
-
-1. Install AWS CLI
-https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-
-2. Install jq
-https://jqlang.github.io/jq/download/
-
-3. First we need to generate access keys to configure the AWS CLI. Go to AWS console and select **Security Credentials** from the dropdown menu on the top right.
-![security_credentials](handout/security_credentials.png?raw=true)
-
-4. Scroll down and find "Access Keys" Section. Ignore all the other permission errors. Click on **Create access key**
-![accesskeys](handout/accesskeys.png?raw=true)
-
-5. In the next page, select use case as "Command Line Interface (CLI)" and select the confirmation box at the bottom. Skip the tag creation and you should get your access keys. Click the **Download .csv file** button and save it in your computer.
-![create_accesskey](handout/create_accesskey.png?raw=true)
-
-6. Now we are ready to use the access key to configure the AWS CLI. Open a terminal (or command line) and run
+1. Use `ssh-keygen` to generate a key pair, which includes one public key (named `<key-name>.pub`) and one private key (named `<key-name>`). The dialog will be like the following. Choose the save location of your key pair (`./mykey` in the example below), and passphrase can be empty (just hit enter).
 ~~~~
-aws configure
-~~~~
-Follow the instructions to input your Access key ID and Secret Access Key. Default region name should be **us-west-2** and default output format should be **json**.
-
-7. Now we are ready to generate the key pair for SSH. Use the following command to generate the key pair using AWS CLI. **Use your SUNet id as the key pair name**. Key pair details are saved into `pkp-details.json`
-~~~~
-aws lightsail create-key-pair --key-pair-name <your-sunet-id> > pkp-details.json
+$ ssh-keygen         
+Generating public/private rsa key pair.
+Enter file in which to save the key (/.ssh/id_rsa): ./mykey
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in mykey
+Your public key has been saved in mykey.pub
 ~~~~
 
-8. Extract and save the public key from the json file. Change the permissions of the resulting key.
-~~~~
-cat pkp-details.json | jq -r '.privateKeyBase64' > cs149_pa3_private_key
-chmod 600 cs149_pa3_private_key
-~~~~
+2. Print the content of public key by using `cat <path-to-your-public-key>` (Or you can also open the file using a text editor). Copy the content and we will upload the public key to the instance.
 
-9. Extract public key from the json file by using the following command, and then copy the output to your clipboard. Now we are ready to upload the public key to the instance.
-~~~~
-cat pkp-details.json | jq -r '.publicKeyBase64'
-~~~~
-
-10. Open the web GUI and start a terminal. First, we need to change our user to `ubuntu`
-~~~~
-sudo su - ubuntu
-~~~~
-
-11. Then open the ssh config file `.ssh/authorized_keys` using your favorite editor. We will use `nano` as an example. You might see there's already a key in this file. Add your key in a new line like the following. **The new line should start with only one "ssh-rsa"**. Save the file and exit after you finished editing.
+3. Open the web GUI and start a terminal. Create a ssh config file `authorized_keys` under the folder `~/.ssh/` using your favorite editor. We will use `nano` as an example. Add your public key in a line like the following. Save the file and exit after you finished editing.
 ![ip](handout/authorized_keys.png?raw=true)
 
-12. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refresh the page if its empty.
+11. We need to change the permissions of the created file. Also change permissions of its parent directories.
+~~~~
+chmod 600 /home/lightsail-user/.ssh/authorized_keys
+chmod 700 /home/lightsail-user/.ssh
+chmod go-w /home/lightsail-user
+~~~~
+
+12. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refreshing the page if its empty.
 ![ip](handout/ip.png?raw=true)
 
-13. Finally, you can SSH into your instance using the following command with your instance's IP address!
+13. Finally, you can SSH into your instance using generated private key with the following command!
 ~~~~
-ssh -i cs149_pa3_private_key ubuntu@<instance_ip_addr>
-~~~~
-Due to permission issues, you can only SSH into the lightsail VM as user `ubuntu`, however, when you use the web GUI you are logged in as `lightsail-user`. To avoid any file permission issues when you switch between web GUI and SSH, please run the following command to switch to `lightsail-user` everytime you SSH into the instance.
-~~~~
-sudo su - lightsail-user
+ssh -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>
 ~~~~
 
 ## Setting up the VM environment ##
