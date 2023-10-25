@@ -81,7 +81,9 @@ chmod +x ./asst3/install.sh
 source ~/.bashrc
 ~~~~
 
-4. After running the script, CUDA should be installed. You can double check the cuda version, which should be 12.3. The GPU we are using is Tesla T4.
+4. After running the script, CUDA should be installed. You can double check the cuda version using `nvidia-smi`, which should be **12.3**. The GPU we are using is **Tesla T4**. 
+
+(If the command errors, try restarting the terminal/restarting the instance, and if error persists, make an Ed post and TAs will help!)
 ~~~~
 lightsail-user@ip-172-26-12-153:~$ nvidia-smi
 Mon Oct 23 16:08:43 2023       
@@ -116,4 +118,11 @@ If you are using SSH, you can fetch your code using `scp` command like following
 ~~~~
 scp -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>:/path/to/file /path/to/local_file
 ~~~~
+
+## Shutting down VM ##
+When you're done using the VM, you can shut it down by clicking "stop computer" in the web page, or using the command below in the terminal.
+~~~~
+sudo shutdown -h now
+~~~~
+
  
