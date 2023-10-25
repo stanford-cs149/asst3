@@ -15,7 +15,7 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 ## Environment Setup ##
 
-1. You will develop this assignment on GPU-enabled VMs on Amazon Web Services (AWS). Please follow the instructions in [cloud_readme.md](cloud_readme.md) for setting up a machine to run the assignment.
+1. You will collect results (i.e. run performance tests) for this assignment on GPU-enabled VMs on Amazon Web Services (AWS). Please follow the instructions in [cloud_readme.md](cloud_readme.md) for setting up a machine to run the assignment.
 
 2. Download the Assignment starter code from the course Github using:
 
