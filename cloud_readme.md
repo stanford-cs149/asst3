@@ -48,17 +48,17 @@ Your public key has been saved in mykey.pub
 3. Open the web GUI and start a terminal. Create a ssh config file `authorized_keys` under the folder `~/.ssh/` using your favorite editor. We will use `nano` as an example. Add your public key in a line like the following. Save the file and exit after you finished editing.
 ![ip](handout/authorized_keys.png?raw=true)
 
-11. We need to change the permissions of the created file. Also change permissions of its parent directories.
+4. We need to change the permissions of the created file. Also change permissions of its parent directories.
 ~~~~
 chmod 600 /home/lightsail-user/.ssh/authorized_keys
 chmod 700 /home/lightsail-user/.ssh
 chmod go-w /home/lightsail-user
 ~~~~
 
-12. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refreshing the page if its empty.
+5. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refreshing the page if its empty.
 ![ip](handout/ip.png?raw=true)
 
-13. Finally, you can SSH into your instance using generated private key with the following command!
+6. Finally, you can SSH into your instance using generated private key with the following command!
 ~~~~
 ssh -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>
 ~~~~
