@@ -16,7 +16,9 @@ NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the
 3. After you entered the Lightsail page, click **Lightsail for Research** at the top middle.
 ![lightsail](handout/lightsail.png?raw=true)
 
-4. Click on the menu button at the top left, and you should see your instance under "virtual computers".
+4. Click on the menu button at the top left, and you should see your instance under "virtual computers" (the instance name should include your SUNet id).
+
+*Oct 25 2:42PM: Lightsail web page is currently bugged where you will see lots of red boxes with errors. You can ignore the errors (close all red boxes) and continue to work with your instance.*
 ![lightsail_for_research](handout/lightsail_for_research.png?raw=true)
 
 5. Select your instance. You should be able to start your instance by clicking "Start Computer" on the top right. After the instance is started, you can launch the GUI by clicking on **launch Ubuntu**
