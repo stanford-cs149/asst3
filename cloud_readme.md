@@ -57,7 +57,7 @@ chmod 700 /home/lightsail-user/.ssh
 chmod go-w /home/lightsail-user
 ~~~~
 
-5. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refreshing the page if its empty.
+5. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refreshing the page if its empty. **Note: the IP of your instance changes every time it is restarted!**
 ![ip](handout/ip.png?raw=true)
 
 6. Finally, you can SSH into your instance using generated private key with the following command!
