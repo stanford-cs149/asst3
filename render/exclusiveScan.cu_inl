@@ -14,6 +14,7 @@
 //         and the number of elements that will be scanned. 
 //          You should define this in your cudaRenderer.cu file, 
 //          based on your implementation.
+//    Note: shared-memory exclusive scan works correctly only if SCAN_BLOCK_DIM <= 1024
 //  - The parameter sScratch should be a pointer to an array with 2*SCAN_BLOCK_DIM elements
 //  - The 3 arrays should be in shared memory. 
 
