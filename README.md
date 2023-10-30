@@ -431,6 +431,6 @@ Therefore, while debugging, it's recommended that you wrap __all__ CUDA API call
 Please submit your work using Gradescope. If you are working with a partner please remember to tag your partner on gradescope.
 
 1. __Please submit your writeup as the file `writeup.pdf`.__
-2. __Please submit your code under the folder `code`.__  Just submit your full Assignment 3 source tree. To keep submission sizes small, please do a `make clean` in the program directories prior to creating the archive, and remove any residual output images, etc. Before submitting the source files, make sure that all code is compilable and runnable! We should be able to simply make, then execute your programs in `/saxpy`, `/scan`, and `/render` without manual intervention. 
+2. __Please submit run `sh create_submission.sh` to generate a zip to submit to gradescope.__ Note that this will run make clean in your code directories so you will have to run make again to run your code. If the script errors saying 'Permission denied', you should run `chmod +x create\_submission.sh` and then try rerunning the script.
 
 Our grading scripts will rerun the checker code allowing us to verify your score matches what you submitted in the `writeup.pdf`.  We might also try to run your code on other datasets to further examine its correctness.
