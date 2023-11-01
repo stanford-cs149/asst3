@@ -1,6 +1,6 @@
 # Assignment 3: A Simple CUDA Renderer #
 
-**Due:  Tue Nov 8, 11:59PM PST**
+**Due:  Wed Nov 8, 11:59PM PST**
 
 **100 points total**
 
