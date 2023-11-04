@@ -67,7 +67,7 @@ ssh -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>
 
 ## Setting up the VM environment ##
 
-1. We have provided an installation script in the assignment repo to install CUDA and other necessary packages. Clone the assignment repo to your instance using the following command.
+1. If you run `nvcc` in the instance and find it is not installed, you will need to run the install.sh script in the asst3 repo to reinstall CUDA 12. Likewise, if `nvidia-smi` shows a CUDA version that is 11.4, you also need to run install.sh. You may need to remove the existing nvidia driver first: `sudo apt remove --purge '^nvidia-.*'`. Clone the assignment repo to your instance using the following command.
 ~~~~
 git clone https://github.com/stanford-cs149/asst3.git
 ~~~~
@@ -85,7 +85,7 @@ source ~/.bashrc
 
 4. After running the script, CUDA should be installed. You can double check the cuda version using `nvidia-smi`, which should be **12.3**. The GPU we are using is **Tesla T4**. 
 
-(If the command errors, try restarting the terminal/restarting the instance, and if error persists, make an Ed post and TAs will help!)
+(If the command errors, try restarting the terminal/restarting the instance, and if error persists, make an Ed post and CAs will help!)
 ~~~~
 lightsail-user@ip-172-26-12-153:~$ nvidia-smi
 Mon Oct 23 16:08:43 2023       
