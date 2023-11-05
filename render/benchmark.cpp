@@ -21,7 +21,7 @@ static void compare_images(const Image* ref_image, const Image* cuda_image) {
     
     for (i = 0 ; i < 4 * ref_image->width * ref_image->height; i++) {
         // Compare with floating point error tolerance of 0.1f and ignore alpha
-        if (fabs(ref_image->data[i] - cuda_image->data[i]) > 0.1f && i%4 != 3) {
+        if ((!isfinite(cuda_image->data[i]) || fabs(ref_image->data[i] - cuda_image->data[i]) > 0.1f) && i%4 != 3) {
             mismatch_count++;
             // Get pixel number and print values
             int j = i/4;
