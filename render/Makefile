@@ -1,11 +1,11 @@
 
 EXECUTABLE := render
 
-CU_FILES   := cudaRenderer.cu
+CU_FILES   := cudaRenderer.cu benchmark.cu
 
 CU_DEPS    :=
 
-CC_FILES   := main.cpp display.cpp benchmark.cpp refRenderer.cpp \
+CC_FILES   := main.cpp display.cpp refRenderer.cpp \
               noise.cpp ppm.cpp sceneLoader.cpp
 
 LOGS	   := logs

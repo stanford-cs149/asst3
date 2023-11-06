@@ -1,6 +1,8 @@
 #include <string>
 #include <math.h>
 
+#include <cuda.h>
+
 #include "circleRenderer.h"
 #include "cycleTimer.h"
 #include "image.h"
@@ -79,14 +81,17 @@ startBenchmark(
         double startClearTime = CycleTimer::currentSeconds();
 
         renderer->clearImage();
+        cudaDeviceSynchronize();
 
         double endClearTime = CycleTimer::currentSeconds();
 
         renderer->advanceAnimation();
+        cudaDeviceSynchronize();
 
         double endAdvanceTime = CycleTimer::currentSeconds();
 
         renderer->render();
+        cudaDeviceSynchronize();
 
         double endRenderTime = CycleTimer::currentSeconds();
 
@@ -152,16 +157,19 @@ CheckBenchmark(
         ref_renderer->clearImage();
         double startClearTime = CycleTimer::currentSeconds();
         cuda_renderer->clearImage();
+        cudaDeviceSynchronize();
         double endClearTime = CycleTimer::currentSeconds();
 
         ref_renderer->advanceAnimation();
         double startAdvanceTime = CycleTimer::currentSeconds();
         cuda_renderer->advanceAnimation();
+        cudaDeviceSynchronize();
         double endAdvanceTime = CycleTimer::currentSeconds(); 
 
         ref_renderer->render();
         double startRenderTime = CycleTimer::currentSeconds();
         cuda_renderer->render();
+        cudaDeviceSynchronize();
         double endRenderTime = CycleTimer::currentSeconds();
 
         if (frame >= startFrame) {
