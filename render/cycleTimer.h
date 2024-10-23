@@ -20,6 +20,7 @@
 #  include <stdlib.h>
 #  include <string.h>
 #  include <sys/time.h>
+#  include <time.h>
 #endif
 
 
@@ -57,6 +58,11 @@
       unsigned int val;
       asm volatile("mrc p15, 0, %0, c9, c13, 0" : "=r"(val));
       return val;
+#elif defined(__ARM_ARCH) 
+      // Use clock_gettime with CLOCK_MONOTONIC_RAW for high-resolution timing
+      timespec spec;
+      clock_gettime(CLOCK_MONOTONIC_RAW, &spec);
+      return static_cast<unsigned long long>(spec.tv_sec) * 1e9 + spec.tv_nsec;
 #else
       timespec spec;
       clock_gettime(CLOCK_THREAD_CPUTIME_ID, &spec);
@@ -146,7 +152,7 @@
               *MHz_str = '\0';
               if (1 == sscanf(after_at, "%f", &MHz)) {
                 //printf("MHz = %f\n", MHz);
-                secondsPerTick_val = 1e-6f / GHz;
+                secondsPerTick_val = 1e-6f / MHz;
                 break;
               }
             }

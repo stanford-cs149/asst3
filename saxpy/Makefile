@@ -8,11 +8,15 @@ CU_DEPS    :=
 CC_FILES   := main.cpp
 
 ###########################################################
+ARCH := $(shell uname -m)
 
-ARCH=$(shell uname | sed -e 's/-.*//g')
+ifeq ($(ARCH), aarch64)
+    CXX = g++
+else
+    CXX = g++ -m64
+endif
 
 OBJDIR=objs
-CXX=g++ -m64
 CXXFLAGS=-O3 -Wall
 ifeq ($(ARCH), Darwin)
 # Building on mac

@@ -12,8 +12,15 @@ LOGS	   := logs
 
 ###########################################################
 
+ARCH := $(shell uname -m)
+
+ifeq ($(ARCH), aarch64)
+    CXX = g++
+else
+    CXX = g++ -m64
+endif
+
 OBJDIR=objs
-CXX=g++ -m64
 CXXFLAGS=-O3 -Wall
 LDFLAGS=-L/usr/local/cuda/lib64/ -lcudart
 NVCC=nvcc
