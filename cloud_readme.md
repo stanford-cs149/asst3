@@ -11,7 +11,7 @@ The default AWS account level quota for GPU instances is 0, so many of you will 
 ## Creating a VM ##
 
 1. Log in to the [AWS EC2 dashboard](https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#Home). On the top right of the page, switch the the region to the one you have applied quota for.
-![Switch Region](figs/image.png?raw=true)
+![Switch Region](figs/switch-region.png?raw=true)
 
 2. Now you're ready to create a VM instance. Click on the button that says `Launch instance`.
 ![Launch instance](figs/launch-instance.png?raw=true)
@@ -20,10 +20,10 @@ The default AWS account level quota for GPU instances is 0, so many of you will 
 ![AMI](figs/AMI.png?raw=true)
 
 4. Choose the `g5.xlarge` instance type.
-![Instance type](instance-type.png?raw=true)
+![Instance type](figs/instance-type.png?raw=true)
 
 5. Change the size of the volume to 64 GB to accomodate the packages we will need to install to make the instance functional for the assignment:
-![Storage](storage.png?raw=true)
+![Storage](figs/storage.png?raw=true)
 
 6. You will need a key pair to access your instance. In `Key pair (login)` section, click `Create a new key pair` and give it whatever name you'd like. This will download a keyfile to your computer called `<key_name>.pem` which you will use to login to the VM instance you are about to create. Finally, you can launch your instance.
 ![Key Pair Step 1](figs/keypair-step1.png)
@@ -46,7 +46,7 @@ ssh -i path/to/key_name.pem ubuntu@<public_dns_name>
 
 ## Setting up the VM environment ##
 
-1. If you run `nvcc` in the instance and find it is not installed, you will need to run the install.sh script in the asst3 repo to reinstall CUDA 12. Likewise, if `nvidia-smi` shows a CUDA version that is 11.4, you also need to run install.sh. You may need to remove the existing nvidia driver first: `sudo apt remove --purge '^nvidia-.*'`. Clone the assignment repo to your instance using the following command.
+1. You will need to run the install.sh script in the asst3 repo to install CUDA. Clone the assignment repo to your instance using the following command.
 ~~~~
 git clone https://github.com/stanford-cs149/asst3.git
 ~~~~
