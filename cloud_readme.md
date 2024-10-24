@@ -16,8 +16,11 @@ The default AWS account level quota for GPU instances is 0, so many of you will 
 2. Now you're ready to create a VM instance. Click on the button that says `Launch instance`.
 ![Launch instance](handout/launch-instance.png?raw=true)
 
-3. Choose the `Ubuntu Server 24.04 LTS (HVM), SSD Volume Type` AMI:
-![AMI](handout/AMI.png?raw=true)
+3. Click on `Browse more AMIs` AMI.
+![Search AMI](handout/search-ami.png)
+
+4. Search for `Deep Learning Base OSS Nvidia Driver GPU` and make sure to select `64-bit (Arm)`.
+![alt text](handout/select-ami.png)
 
 4. Choose the `g5.xlarge` instance type.
 ![Instance type](handout/instance-type.png?raw=true)
@@ -46,37 +49,19 @@ ssh -i path/to/key_name.pem ubuntu@<public_dns_name>
 
 ## Setting up the VM environment ##
 
-1. You will need to run the install.sh script in the asst3 repo to install CUDA. Clone the assignment repo to your instance using the following command.
+1. CUDA should be by default installed. You can double check the cuda version using `nvidia-smi` and see an output similar to the following. The CUDA version should be **12.4** and the GPU we are using is **NVIDIA T4G**.
 ~~~~
-git clone https://github.com/stanford-cs149/asst3.git
-~~~~
-
-2. Add execute permissions, and run the installation script. If you encounter any issues, please make a post on Ed!
-~~~~
-chmod +x ./asst3/install.sh
-./asst3/install.sh
-~~~~
-
-3. Restart the VM to boot the driver
-~~~~
-sudo reboot
-~~~~
-
-4. After running the script, CUDA should be installed. You can double check the cuda version using `nvidia-smi`, which should be **12.6**. The GPU we are using is **Tesla A10G**. 
-
-(If the command errors, try restarting the terminal/restarting the instance, and if error persists, make an Ed post and CAs will help!)
-~~~~
-ubuntu@ip-172-31-72-234:~$ nvidia-smi
-Thu Oct 24 20:56:22 2024       
+ubuntu@ip-172-31-32-141:~$ nvidia-smi
+Thu Oct 24 21:34:13 2024       
 +-----------------------------------------------------------------------------------------+
-| NVIDIA-SMI 560.35.03              Driver Version: 560.35.03      CUDA Version: 12.6     |
+| NVIDIA-SMI 550.127.05             Driver Version: 550.127.05     CUDA Version: 12.4     |
 |-----------------------------------------+------------------------+----------------------+
 | GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
 |                                         |                        |               MIG M. |
 |=========================================+========================+======================|
-|   0  NVIDIA A10G                    Off |   00000000:00:1E.0 Off |                    0 |
-|  0%   24C    P8              8W /  300W |       1MiB /  23028MiB |      0%      Default |
+|   0  NVIDIA T4G                     On  |   00000000:00:1F.0 Off |                    0 |
+| N/A   49C    P8             10W /   70W |       1MiB /  15360MiB |      0%      Default |
 |                                         |                        |                  N/A |
 +-----------------------------------------+------------------------+----------------------+
                                                                                          
@@ -89,9 +74,21 @@ Thu Oct 24 20:56:22 2024
 +-----------------------------------------------------------------------------------------+
 ~~~~
 
+2. Run the following command to install the FreeGlut library required for the assignment.
+~~~~
+sudo apt-get update && sudo apt-get install freeglut3-dev -y
+~~~~
+
+3. Now you can clone the asst3 git repository and start developing.
+~~~~
+git clone https://github.com/stanford-cs149/asst3.git
+~~~~
+
 ## Fetching your code from AWS ##
 
-Once you've completed your assignment, you can fetch your code using `scp` command like following in your local machine:
+We recommend that you create a private git repository and develop your assignment in there. It reduces the risk of losing your code and helps you keep track of old versions.
+
+Alternatively, you can also use `scp` command like following in your local machine to fetch code from a remote machine.
 ~~~~
 scp -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>:/path/to/file /path/to/local_file
 ~~~~
