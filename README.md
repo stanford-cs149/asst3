@@ -265,37 +265,38 @@ We recommend that you:
 Following are commandline options to `./render`: 
 ~~~~
 Usage: ./render [options] scenename
-Valid scenenames are: rgb, rgby, rand10k, rand100k, biglittle, littlebig, pattern,
+Valid scenenames are: rgb, rgby, rand10k, rand100k, rand1M, biglittle, littlebig, pattern, micro2M,
                       bouncingballs, fireworks, hypnosis, snow, snowsingle
 Program Options:
   -r  --renderer <cpuref/cuda>  Select renderer: ref or cuda (default=cuda)
-  -s  --size  <INT>             Make rendered image <INT>x<INT> pixels (default=1024)
-  -b  --bench <START:END>       Run for frames [START,END)   (default [0,1))
-  -f  --file  <FILENAME>        Output file name (FILENAME_xxxx.ppm)
+  -s  --size  <INT>             Rendered image size: <INT>x<INT> pixels (default=1024)
+  -b  --bench <START:END>       Run for frames [START,END) (default=[0,1))
   -c  --check                   Check correctness of CUDA output against CPU reference
   -i  --interactive             Render output to interactive display
+  -f  --file  <FILENAME>        Output file name (FILENAME_xxxx.ppm) (default=output)
   -?  --help                    This message
 ~~~~
 
 **Checker code:** To detect correctness of the program, `render` has a convenient `--check` option. This option runs the sequential version of the reference CPU renderer along with your CUDA renderer and then compares the resulting images to ensure correctness. The time taken by your CUDA renderer implementation is also printed.
 
-We provide a total of five circle datasets you will be graded on.  However, in order to receive full credit, your code must pass all of our correctness-tests.  To check the correctness and performance score of your code, run **`./checker.py`** (notice the .py extension) in the `/render` directory. If you run it on the starter code, the program will print a table like the following, along with the results of our entire test set: 
+We provide a total of eight circle datasets you will be graded on.  However, in order to receive full credit, your code must pass all of our correctness-tests.  To check the correctness and performance score of your code, run **`./checker.py`** (notice the .py extension) in the `/render` directory. If you run it on the starter code, the program will print a table like the following, along with the results of our entire test set: 
 
 ~~~~
-------------
 Score table:
 ------------
 --------------------------------------------------------------------------
 | Scene Name      | Ref Time (T_ref) | Your Time (T)   | Score           |
 --------------------------------------------------------------------------
-| rgb             | 0.2321           | (F)             | 0               |
-| rand10k         | 5.7317           | (F)             | 0               |
-| rand100k        | 25.8878          | (F)             | 0               |
-| pattern         | 0.7165           | (F)             | 0               |
-| snowsingle      | 38.5302          | (F)             | 0               |
-| biglittle       | 14.9562          | (F)             | 0               |
+| rgb             | 0.2698           | (F)             | 0               |
+| rand10k         | 2.7341           | (F)             | 0               |
+| rand100k        | 26.1481          | (F)             | 0               |
+| pattern         | 0.3591           | (F)             | 0               |
+| snowsingle      | 16.1636          | (F)             | 0               |
+| biglittle       | 14.9861          | (F)             | 0               |
+| rand1M          | 188.0086         | (F)             | 0               |
+| micro2M         | 355.9104         | (F)             | 0               |
 --------------------------------------------------------------------------
-|                                    | Total score:    | 0/72            |
+|                                    | Total score:    | 0/96            |
 --------------------------------------------------------------------------
 ~~~~
 
