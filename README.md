@@ -21,39 +21,11 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 `git clone https://github.com/stanford-cs149/asst3`
 
-The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA. There are a wealth of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
+The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA. There are a wealth of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/blog/2014/01/update-on-udacity-cs344-intro-to.html).
 
-Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the NVIDIA T4 GPUs you will used in this assignment.  NVIDIA T4 GPUs support CUDA compute capability 7.5.
+Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the NVIDIA A10G GPUs you will used in this assignment.  NVIDIA A10G GPUs support CUDA compute capability 8.6.
 
 For C++ questions (like what does the _virtual_ keyword mean), the [C++ Super-FAQ](https://isocpp.org/faq) is a great resource that explains things in a way that's detailed yet easy to understand (unlike a lot of C++ resources), and was co-written by Bjarne Stroustrup, the creator of C++!
-
-### WARNING ###
-
-To save resources, the VMs will auto stop after 15 minutes of < 2% CPU activity. 
-
-This means that that the VM will close if you are not doing CPU intensive work such as writing code. 
-
-Because of this, we recommend that you develop your code locally, and either copy your code into the machines manually or connect use git to pull your commits to the VM. Using git is nice because you can go back to previous versions of your code.
-
-If you have not set up a private git repo before here are some resources that should help you get started. Make sure that the github repo is private to ensure that you are not breaking the honor code. 
-
-Useful links to set up git:
-- [adding a remote repository](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories) to connect to your private repo.
-- [adding ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to set up a ssh key. We recommending doing this without a password and with the default name id_rsa.
-
-Once you have a ssh key and know how to connect to a remote repository, you will need to do the following two things to set up your environment. 
-
-1. Copy your private key to the server's .ssh folder (id_rsa in your .ssh) file
-2. Create a file named config in the server and locally with the following lines.
-~~~
-Host github.com
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_rsa
-~~~
-
-You should now be able to pull and push commits from the server and locally!
-
 
 ## Part 1: CUDA Warm-Up 1: SAXPY (5 pts) ##
 
@@ -95,7 +67,7 @@ __Question 1.__ What performance do you observe compared to the sequential CPU-b
 SAXPY (recall your results from saxpy on Program 5 from Assignment 1)? 
 
 __Question 2.__ Compare and explain the difference between the results
-provided by two sets of timers (timing only the kernel execution vs. timing the entire process of moving data to the GPU and back in addition to the kernel execution). Are the bandwidth values observed *roughly* consistent with the reported bandwidths available to the different components of the machine? (You should use the web to track down the memory bandwidth of an NVIDIA T4 GPU. Hint: <https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-t4/t4-tensor-core-datasheet-951643.pdf>. The expected bandwidth of memory bus of AWS is 4 GB/s, which does not match that of a 16-lane [PCIe 3.0](https://en.wikipedia.org/wiki/PCI_Express). Several factors prevent peak bandwidth, including CPU motherboard chipset performance and whether or not the host CPU memory used as the source of the transfer is “pinned” — the latter allows the GPU to directly access memory without going through virtual memory address translation. If you are interested, you can find more info here: <https://kth.instructure.com/courses/12406/pages/optimizing-host-device-data-communication-i-pinned-host-memory>)
+provided by two sets of timers (timing only the kernel execution vs. timing the entire process of moving data to the GPU and back in addition to the kernel execution). Are the bandwidth values observed *roughly* consistent with the reported bandwidths available to the different components of the machine? (You should use the web to track down the memory bandwidth of an NVIDIA A10G GPU. Hint: <https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a10/pdf/datasheet-new/nvidia-a10-datasheet.pdf>. The expected bandwidth of memory bus of AWS is 4 GB/s, which does not match that of a 16-lane [PCIe 3.0](https://en.wikipedia.org/wiki/PCI_Express). Several factors prevent peak bandwidth, including CPU motherboard chipset performance and whether or not the host CPU memory used as the source of the transfer is “pinned” — the latter allows the GPU to directly access memory without going through virtual memory address translation. If you are interested, you can find more info here: <https://kth.instructure.com/courses/12406/pages/optimizing-host-device-data-communication-i-pinned-host-memory>)
 
 ## Part 2: CUDA Warm-Up 2: Parallel Prefix-Sum (10 pts) ##
 
@@ -109,7 +81,7 @@ We want you to implement `find_repeats` by first implementing parallel exclusive
 
 Exlusive prefix sum takes an array `A` and produces a new array `output` that has, at each index `i`, the sum of all elements up to but not including `A[i]`. For example, given the array `A={1,4,6,8,2}`, the output of exclusive prefix sum `output={0,1,5,11,19}`.
 
-The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall23/lecture/dataparallel/slide_17> 
+The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall24/lecture/dataparallel/slide_17> 
 
 ~~~~
 void exclusive_scan_iterative(int* start, int* end, int* output) {
@@ -188,7 +160,7 @@ the program is run, in order to aid in debugging. You can pass the argument `-i 
 will do this when grading. We encourage you to come up with alternate inputs to your program to help you evaluate it.
 You can also use the `-n <size>` option to change the length of the input array.  
 
-The argument `--thrust` will use the [Thrust Library's](http://thrust.github.io/) implementation of [exclusive scan](http://thrust.github.io/doc/group__prefixsums.html).  __Up to two points of extra credit for anyone that can create an implementation is competitive with Thrust.__
+The argument `--thrust` will use the [Thrust Library's](http://thrust.github.io/) implementation of [exclusive scan](https://docs.nvidia.com/cuda/archive/12.2.2/thrust/index.html?highlight=group%20prefix%20sums#prefix-sums).  __Up to two points of extra credit for anyone that can create an implementation is competitive with Thrust.__
 
 ## Part 3: A Simple Circle Renderer (85 pts) ##
 
