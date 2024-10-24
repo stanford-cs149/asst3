@@ -1,122 +1,94 @@
 # AWS Setup Instructions #
 
-For performance testing, you will need to run this assignment on a VM instance on Amazon Web Services (AWS). Here are the steps for how to get setup for running on AWS.
+For performance testing, you will need to run this assignment on a VM instance on Amazon Web Services (AWS). We'll be providing (or have already sent) you student coupons that you can use for billing purposes. Here are the steps for how to get setup for running on AWS.
 
-By now you should have already received the AWS login credentials. If not, make a private Ed post and we will create login credentials for you.
+> [!NOTE]
+> Please don't forget to SHUT DOWN your instances when you're done for the day to avoid burning through credits overnight!
 
-NOTE: __Please don't forget to SHUT DOWN your instances when you're done for the day!__
+## Applying for Quota ##
+The default AWS account level quota for GPU instances is 0, so many of you will not be able to actually launch a GPU instance unless you request an increase in your account-level quota. **Please follow the steps in [this document](https://docs.google.com/document/d/1NyiIvfKRCZG-ZLq4x1wukIdYg5FZoUZay_f1HSWUJ6I/edit?tab=t.0) to increase your account-level quota.** This process is fairly straightforward. After following the steps in the document, you will have submitted a quota increase ticket. You will be notified of this ticket creation by receiving an email to the email address associated with your AWS account. These tickets generally take several hours to process, and when they are approved you will receive an additional email to the email address that is associated with your AWS account. 
 
-## Connect to VM ##
+## Creating a VM ##
 
-1. Log in to the [AWS console](https://cs149-fall23.signin.aws.amazon.com/console) by entering your credentials. The Account ID is `744774966508` and the Account Alias `cs149-fall23`. You can enter either one.
+1. Log in to the [AWS EC2 dashboard](https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#Home). On the top right of the page, switch the the region to the one you have applied quota for.
+![Switch Region](handout/switch-region.png?raw=true)
 
-2. Now you should see the AWS management console. Search for **Lightsail** in the top left search bar.
-![console](handout/console.png?raw=true)
+2. Now you're ready to create a VM instance. Click on the button that says `Launch instance`.
+![Launch instance](handout/launch-instance.png?raw=true)
 
-3. After you entered the Lightsail page, click **Lightsail for Research** at the top middle.
-![lightsail](handout/lightsail.png?raw=true)
+3. Click on `Browse more AMIs` AMI.
+![Search AMI](handout/search-ami.png)
 
-4. Click on the menu button at the top left, and you should see your instance under "virtual computers" (the instance name should include your SUNet id).
+4. Search for `Deep Learning Base OSS Nvidia Driver GPU` and make sure to select `64-bit (Arm)`.
+![alt text](handout/select-ami.png)
 
-*Oct 25 2:42PM: Lightsail web page is currently bugged where you will see lots of red boxes with errors. You can ignore the errors (close all red boxes) and continue to work with your instance.*
-![lightsail_for_research](handout/lightsail_for_research.png?raw=true)
+4. Choose the `g5.xlarge` instance type.
+![Instance type](handout/instance-type.png?raw=true)
 
-5. Select your instance. You should be able to start your instance by clicking "Start Computer" on the top right. After the instance is started, you can launch the GUI by clicking on **launch Ubuntu**
-![instance](handout/instance.png?raw=true)
+5. Change the size of the volume to 64 GB to accomodate the packages we will need to install to make the instance functional for the assignment:
+![Storage](handout/storage.png?raw=true)
 
-__Note: The instance automatically shuts off after 15 minutes of inactivity (CPU usage < 2%), please make sure to save your work frequently!__
+6. You will need a key pair to access your instance. In `Key pair (login)` section, click `Create a new key pair` and give it whatever name you'd like. This will download a keyfile to your computer called `<key_name>.pem` which you will use to login to the VM instance you are about to create. Finally, you can launch your instance.
+![Key Pair Step 1](handout/keypair-step1.png)
+![Key Pair Step 2](handout/keypair-step2.png)
 
-6. Now you have logged into your instance! To copy your local files to the instance, simply drag them to the GUI. To open the terminal, click **Activities** at the top left in the GUI, and then click on the terminal icon at the bottom middle:
-![GUI](handout/GUI.png?raw=true)
+7. Confirm all details and launch instance  
+![Confirm](handout/confirm-launch.png)
 
-__Note: The web GUI accepts only one connection, so two people cannot use the GUI at the same time. If you would like to have multiple persons using the instance at the same time, please use SSH, which involves a more complicated setup.__
+8. Now that you've created your VM, you should be able to __SSH__ into it. You need the public IPv4 DNS name to SSH into it, which you can find by navigating to your instance's page and then clicking the `Connect` button, followed by selecting the SSH tab (note, it may take a moment for the instance to startup and be assigned an IP address):
+![Connect](handout/connect.png?raw=true)
 
-### How to set up SSH connection to the VM ###
-**Note:** The first step targets MacOS/Linux Users, if you are using windows, you can do a similar process to generate your keypair (https://www.purdue.edu/science/scienceit/ssh-keys-windows.html), and then Proceed to step 2. If you have any issues, please don't hesitate to make a Ed post or go to office hours!
-
-1. Use `ssh-keygen` to generate a key pair, which includes one public key (named `<key-name>.pub`) and one private key (named `<key-name>`). The dialog will be like the following. Choose the save location of your key pair (`./mykey` in the example below), and passphrase can be empty (just hit enter).
+Make sure you follow the instructions to change the permissions of your key file by running `chmod 400 path/to/key_name.pem`.
+Once you have the IP address, you can login to the instance by running this command:
 ~~~~
-$ ssh-keygen         
-Generating public/private rsa key pair.
-Enter file in which to save the key (/.ssh/id_rsa): ./mykey
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
-Your identification has been saved in mykey
-Your public key has been saved in mykey.pub
-~~~~
-
-2. Print the content of public key by using `cat <path-to-your-public-key>` (Or you can also open the file using a text editor). Copy the content and we will upload the public key to the instance.
-
-3. Open the web GUI and start a terminal. Create a ssh config file `authorized_keys` under the folder `~/.ssh/` using your favorite editor. We will use `nano` as an example. Add your public key in a line like the following. Save the file and exit after you finished editing.
-![ip](handout/authorized_keys.png?raw=true)
-
-4. We need to change the permissions of the created file. Also change permissions of its parent directories.
-~~~~
-chmod 600 /home/lightsail-user/.ssh/authorized_keys
-chmod 700 /home/lightsail-user/.ssh
-chmod go-w /home/lightsail-user
+ssh -i path/to/key_name.pem ubuntu@<public_dns_name>
 ~~~~
 
-5. Now we have completed our key pair setup. Find your instance's IP address in the console. After starting your Lightsail instance, you can find its IP address here. Try refreshing the page if its empty. **Note: the IP of your instance changes every time it is restarted!**
-![ip](handout/ip.png?raw=true)
-
-6. Finally, you can SSH into your instance using generated private key with the following command!
-~~~~
-ssh -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>
-~~~~
+> [!WARNING]
+> If you need to step away during setup after creating your instance, be sure to shut it down. Leaving it running could deplete your credits, and you may incur additional costs.
 
 ## Setting up the VM environment ##
 
-1. If you run `nvcc` in the instance and find it is not installed, you will need to run the install.sh script in the asst3 repo to reinstall CUDA 12. Likewise, if `nvidia-smi` shows a CUDA version that is 11.4, you also need to run install.sh. You may need to remove the existing nvidia driver first: `sudo apt remove --purge '^nvidia-.*'`. Clone the assignment repo to your instance using the following command.
+1. CUDA should be by default installed. You can check the cuda version using `nvidia-smi` and see an output similar to the following. The CUDA version should be **12.4** and the GPU we are using is **NVIDIA T4G**.
+~~~~
+ubuntu@ip-172-31-32-141:~$ nvidia-smi
+Thu Oct 24 21:34:13 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.127.05             Driver Version: 550.127.05     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA T4G                     On  |   00000000:00:1F.0 Off |                    0 |
+| N/A   49C    P8             10W /   70W |       1MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+~~~~
+
+2. Run the following command to install the FreeGlut library required for the assignment.
+~~~~
+sudo apt-get update && sudo apt-get install freeglut3-dev -y
+~~~~
+
+3. Now you can clone the asst3 git repository and start developing.
 ~~~~
 git clone https://github.com/stanford-cs149/asst3.git
 ~~~~
 
-2. Add execute permissions, and run the installation script. If you encounter any issues, please make a post on Ed!
-~~~~
-chmod +x ./asst3/install.sh
-./asst3/install.sh
-~~~~
-
-3. Run the following command to update your path.
-~~~~
-source ~/.bashrc
-~~~~
-
-4. After running the script, CUDA should be installed. You can double check the cuda version using `nvidia-smi`, which should be **12.3**. The GPU we are using is **Tesla T4**. 
-
-(If the command errors, try restarting the terminal/restarting the instance, and if error persists, make an Ed post and CAs will help!)
-~~~~
-lightsail-user@ip-172-26-12-153:~$ nvidia-smi
-Mon Oct 23 16:08:43 2023       
-+---------------------------------------------------------------------------------------+
-| NVIDIA-SMI 545.23.06              Driver Version: 545.23.06    CUDA Version: 12.3     |
-|-----------------------------------------+----------------------+----------------------+
-| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
-|                                         |                      |               MIG M. |
-|=========================================+======================+======================|
-|   0  Tesla T4                       On  | 00000000:00:1E.0 Off |                    0 |
-| N/A   43C    P0              26W /  70W |    255MiB / 15360MiB |      0%      Default |
-|                                         |                      |                  N/A |
-+-----------------------------------------+----------------------+----------------------+
-                                                                                         
-+---------------------------------------------------------------------------------------+
-| Processes:                                                                            |
-|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
-|        ID   ID                                                             Usage      |
-|=======================================================================================|
-|    0   N/A  N/A      2527      C   /usr/lib/x86_64-linux-gnu/dcv/dcvagent      249MiB |
-+---------------------------------------------------------------------------------------+
-~~~~
-
 ## Fetching your code from AWS ##
 
-Once you've completed your assignment, you can download your code using the File Storage console by clicking on the double-arrow button at top left:
-![file_storage](handout/file_storage.png?raw=true)
-![download](handout/download.png?raw=true)
+We recommend that you create a private git repository and develop your assignment in there. It reduces the risk of losing your code and helps you keep track of old versions.
 
-If you are using SSH, you can fetch your code using `scp` command like following in your local machine:
+Alternatively, you can also use `scp` command like following in your local machine to fetch code from a remote machine.
 ~~~~
 scp -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>:/path/to/file /path/to/local_file
 ~~~~
@@ -126,5 +98,3 @@ When you're done using the VM, you can shut it down by clicking "stop computer" 
 ~~~~
 sudo shutdown -h now
 ~~~~
-
- 

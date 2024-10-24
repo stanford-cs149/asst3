@@ -21,39 +21,11 @@ assignment so you are advised to start early. __Seriously, you are advised to st
 
 `git clone https://github.com/stanford-cs149/asst3`
 
-The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA. There are a wealth of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/course/cs344).
+The CUDA C programmer's guide [PDF version](http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf) or [web version](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)  is an excellent reference for learning how to program in CUDA. There are a wealth of CUDA tutorials and SDK examples on the web (just Google!) and on the [NVIDIA developer site](http://docs.nvidia.com/cuda/).  In particular, you may enjoy the free Udacity course [Introduction to Parallel Programming in CUDA](https://www.udacity.com/blog/2014/01/update-on-udacity-cs344-intro-to.html).
 
-Table G.1 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the NVIDIA T4 GPUs you will used in this assignment.  NVIDIA T4 GPUs support CUDA compute capability 7.5.
+Table 21 in the [CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/#compute-capabilities) is a handy reference for the maximum number of CUDA threads per thread block, size of thread block, shared memory, etc for the NVIDIA T4 GPUs you will used in this assignment.  NVIDIA T4 GPUs support CUDA compute capability 7.5.
 
 For C++ questions (like what does the _virtual_ keyword mean), the [C++ Super-FAQ](https://isocpp.org/faq) is a great resource that explains things in a way that's detailed yet easy to understand (unlike a lot of C++ resources), and was co-written by Bjarne Stroustrup, the creator of C++!
-
-### WARNING ###
-
-To save resources, the VMs will auto stop after 15 minutes of < 2% CPU activity. 
-
-This means that that the VM will close if you are not doing CPU intensive work such as writing code. 
-
-Because of this, we recommend that you develop your code locally, and either copy your code into the machines manually or connect use git to pull your commits to the VM. Using git is nice because you can go back to previous versions of your code.
-
-If you have not set up a private git repo before here are some resources that should help you get started. Make sure that the github repo is private to ensure that you are not breaking the honor code. 
-
-Useful links to set up git:
-- [adding a remote repository](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories) to connect to your private repo.
-- [adding ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to set up a ssh key. We recommending doing this without a password and with the default name id_rsa.
-
-Once you have a ssh key and know how to connect to a remote repository, you will need to do the following two things to set up your environment. 
-
-1. Copy your private key to the server's .ssh folder (id_rsa in your .ssh) file
-2. Create a file named config in the server and locally with the following lines.
-~~~
-Host github.com
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_rsa
-~~~
-
-You should now be able to pull and push commits from the server and locally!
-
 
 ## Part 1: CUDA Warm-Up 1: SAXPY (5 pts) ##
 
@@ -109,7 +81,7 @@ We want you to implement `find_repeats` by first implementing parallel exclusive
 
 Exlusive prefix sum takes an array `A` and produces a new array `output` that has, at each index `i`, the sum of all elements up to but not including `A[i]`. For example, given the array `A={1,4,6,8,2}`, the output of exclusive prefix sum `output={0,1,5,11,19}`.
 
-The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall23/lecture/dataparallel/slide_17> 
+The following "C-like" code is an iterative version of scan.  In the pseudocode before, we use `parallel_for` to indicate potentially parallel loops.   This is the same algorithm we discussed in class: <http://cs149.stanford.edu/fall24/lecture/dataparallel/slide_17> 
 
 ~~~~
 void exclusive_scan_iterative(int* start, int* end, int* output) {
@@ -188,7 +160,7 @@ the program is run, in order to aid in debugging. You can pass the argument `-i 
 will do this when grading. We encourage you to come up with alternate inputs to your program to help you evaluate it.
 You can also use the `-n <size>` option to change the length of the input array.  
 
-The argument `--thrust` will use the [Thrust Library's](http://thrust.github.io/) implementation of [exclusive scan](http://thrust.github.io/doc/group__prefixsums.html).  __Up to two points of extra credit for anyone that can create an implementation is competitive with Thrust.__
+The argument `--thrust` will use the [Thrust Library's](http://thrust.github.io/) implementation of [exclusive scan](https://docs.nvidia.com/cuda/archive/12.2.2/thrust/index.html?highlight=group%20prefix%20sums#prefix-sums).  __Up to two points of extra credit for anyone that can create an implementation is competitive with Thrust.__
 
 ## Part 3: A Simple Circle Renderer (85 pts) ##
 
@@ -370,7 +342,7 @@ Below are a set of tips and hints compiled from previous years.  Note that there
 
 * There are two potential axes of parallelism in this assignment. One axis is *parallelism across pixels* another is *parallelism across circles* (provided the ordering requirement is respected for overlapping circles).  Solutions will need to exploit both types of parallelism, potentially at different parts of the computation.
 * The circle-intersects-box tests provided to you in `circleBoxTest.cu_inl` are your friend.  You are encouraged to use these subroutines.
-* The shared-memory prefix-sum operation provided in `exclusiveScan.cu_inl` may be valuable to you on this assignment (not all solutions may choose to use it). See the simple description of a prefix-sum [here](http://thrust.github.io/doc/group__prefixsums.html). We
+* The shared-memory prefix-sum operation provided in `exclusiveScan.cu_inl` may be valuable to you on this assignment (not all solutions may choose to use it). See the simple description of a prefix-sum [here](https://nvidia.github.io/cccl/thrust/api/function_group__prefixsums_1ga333bd4f34742dcf68d3ac5a0933f67db.html). We
 have provided an implementation of an exclusive prefix-sum on a __power-of-two-sized__ arrays in shared memory.  __The provided code does not work on non-power-of-two inputs and IT ALSO REQUIRES THAT THE NUMBER OF THREADS IN THE THREAD BLOCK BE THE SIZE OF THE ARRAY. PLEASE READ THE COMMENTS IN THE CODE.__
 * You are allowed to use the [Thrust library](http://thrust.github.io/) in your implementation if you so choose.  Thrust is not necessary to achieve the performance of the optimized CUDA reference implementations.  There is one popular way of solving the problem that uses the shared memory prefix-sum implementation that we give you.  There another popular way that uses the prefix-sum routines in the Thrust library.  Both are valid solution strategies.
 * Is there data reuse in the renderer? What can be done to exploit this reuse?
