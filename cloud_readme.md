@@ -62,40 +62,36 @@ chmod +x ./asst3/install.sh
 sudo reboot
 ~~~~
 
-4. After running the script, CUDA should be installed. You can double check the cuda version using `nvidia-smi`, which should be **12.3**. The GPU we are using is **Tesla T4**. 
+4. After running the script, CUDA should be installed. You can double check the cuda version using `nvidia-smi`, which should be **12.6**. The GPU we are using is **Tesla A10G**. 
 
 (If the command errors, try restarting the terminal/restarting the instance, and if error persists, make an Ed post and CAs will help!)
 ~~~~
-lightsail-user@ip-172-26-12-153:~$ nvidia-smi
-Mon Oct 23 16:08:43 2023       
-+---------------------------------------------------------------------------------------+
-| NVIDIA-SMI 545.23.06              Driver Version: 545.23.06    CUDA Version: 12.3     |
-|-----------------------------------------+----------------------+----------------------+
-| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
-|                                         |                      |               MIG M. |
-|=========================================+======================+======================|
-|   0  Tesla T4                       On  | 00000000:00:1E.0 Off |                    0 |
-| N/A   43C    P0              26W /  70W |    255MiB / 15360MiB |      0%      Default |
-|                                         |                      |                  N/A |
-+-----------------------------------------+----------------------+----------------------+
+ubuntu@ip-172-31-72-234:~$ nvidia-smi
+Thu Oct 24 20:56:22 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 560.35.03              Driver Version: 560.35.03      CUDA Version: 12.6     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A10G                    Off |   00000000:00:1E.0 Off |                    0 |
+|  0%   24C    P8              8W /  300W |       1MiB /  23028MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
                                                                                          
-+---------------------------------------------------------------------------------------+
-| Processes:                                                                            |
-|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
-|        ID   ID                                                             Usage      |
-|=======================================================================================|
-|    0   N/A  N/A      2527      C   /usr/lib/x86_64-linux-gnu/dcv/dcvagent      249MiB |
-+---------------------------------------------------------------------------------------+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
 ~~~~
 
 ## Fetching your code from AWS ##
 
-Once you've completed your assignment, you can download your code using the File Storage console by clicking on the double-arrow button at top left:
-![file_storage](handout/file_storage.png?raw=true)
-![download](handout/download.png?raw=true)
-
-If you are using SSH, you can fetch your code using `scp` command like following in your local machine:
+Once you've completed your assignment, you can fetch your code using `scp` command like following in your local machine:
 ~~~~
 scp -i <path-to-your-private-key> lightsail-user@<instance-IP-addr>:/path/to/file /path/to/local_file
 ~~~~
