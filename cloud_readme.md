@@ -49,7 +49,7 @@ ssh -i path/to/key_name.pem ubuntu@<public_dns_name>
 
 ## Setting up the VM environment ##
 
-1. CUDA should be by default installed. You can double check the cuda version using `nvidia-smi` and see an output similar to the following. The CUDA version should be **12.4** and the GPU we are using is **NVIDIA T4G**.
+1. CUDA should be by default installed. You can check the cuda version using `nvidia-smi` and see an output similar to the following. The CUDA version should be **12.4** and the GPU we are using is **NVIDIA T4G**.
 ~~~~
 ubuntu@ip-172-31-32-141:~$ nvidia-smi
 Thu Oct 24 21:34:13 2024       
