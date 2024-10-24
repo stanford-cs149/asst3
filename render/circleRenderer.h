@@ -19,7 +19,9 @@ typedef enum {
     BOUNCING_BALLS, 
     SNOWFLAKES_SINGLE_FRAME,
     BIG_LITTLE,
-    LITTLE_BIG
+    LITTLE_BIG,
+    CIRCLE_TEST_1M,
+    MICRO_2M,
 } SceneName;
 
 

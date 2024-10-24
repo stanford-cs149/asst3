@@ -9,10 +9,10 @@ import math
 perf_pts = 10
 correctness_pts = 2
 
-# scene_names = ["rand100k"]
-# score_scene_names = {"rand100k"}
-scene_names = ["rgb", "rgby", "rand10k", "rand100k", "biglittle", "littlebig", "pattern", "bouncingballs", "hypnosis", "fireworks", "snow", "snowsingle"]
-score_scene_names_list = ["rgb", "rand10k", "rand100k", "pattern", "snowsingle", "biglittle"]
+#scene_names = ["rgb", "rgby", "rand10k", "rand100k", "biglittle", "littlebig", "pattern","bouncingballs", "hypnosis", "fireworks", "snow", "snowsingle", "rand1M", "micro2M"]
+#score_scene_names_list = ["rgb", "rand10k", "rand100k", "pattern", "snowsingle", "biglittle", "rand1M", "micro2M"]
+scene_names = ["rgb", "rand10k", "rand100k", "pattern", "snowsingle", "biglittle", "rand1M", "micro2M"]
+score_scene_names_list = ["rgb", "rand10k", "rand100k", "pattern", "snowsingle", "biglittle", "rand1M", "micro2M"]
 score_scene_names = set(score_scene_names_list)
 
 #### LOGS MANAGEMENT ####

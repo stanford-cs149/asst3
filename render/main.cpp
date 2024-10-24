@@ -18,7 +18,7 @@ void CheckBenchmark(CircleRenderer* ref_renderer, CircleRenderer* cuda_renderer,
 
 void usage(const char* progname) {
     printf("Usage: %s [options] scenename\n", progname);
-    printf("Valid scenenames are: rgb, rgby, rand10k, rand100k, biglittle, littlebig, pattern,\n"
+    printf("Valid scenenames are: rgb, rgby, rand10k, rand100k, rand1M, biglittle, littlebig, pattern, micro2M,\n"
            "                      bouncingballs, fireworks, hypnosis, snow, snowsingle\n");
     printf("Program Options:\n");
     printf("  -r  --renderer <cpuref/cuda>  Select renderer: ref or cuda (default=cuda)\n");
@@ -120,12 +120,16 @@ int main(int argc, char** argv)
         sceneName = CIRCLE_TEST_10K;
     } else if (sceneNameStr.compare("rand100k") == 0) {
         sceneName = CIRCLE_TEST_100K;
+    } else if (sceneNameStr.compare("rand1M") == 0) {
+        sceneName = CIRCLE_TEST_1M;
     } else if (sceneNameStr.compare("pattern") == 0) {
         sceneName = PATTERN;
     } else if (sceneNameStr.compare("biglittle") == 0) {
         sceneName = BIG_LITTLE;
     } else if (sceneNameStr.compare("littlebig") == 0) {
         sceneName = LITTLE_BIG;
+    } else if (sceneNameStr.compare("micro2M") == 0) {
+        sceneName = MICRO_2M;
     } else if (sceneNameStr.compare("bouncingballs") == 0) {
         sceneName = BOUNCING_BALLS;  
     } else if (sceneNameStr.compare("hypnosis") == 0) { 

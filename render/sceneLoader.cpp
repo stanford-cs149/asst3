@@ -66,8 +66,9 @@ generateRandomCircles(
     for (int i=0; i<numCircles; i++) {
 
         float depth = depths[i];
-
-        radius[i] = .02f + .06f * randomFloat();
+	
+	if (numCircles > 100000) radius[i] = .009f + .005f * randomFloat();
+	else radius[i] = .02f + .06f * randomFloat();
 
         int index3 = 3 * i;
 
@@ -79,11 +80,15 @@ generateRandomCircles(
             color[index3] = .1f + .9f * randomFloat();
             color[index3+1] = .2f + .5f * randomFloat();
             color[index3+2] = .5f + .5f * randomFloat();
-        } else {
+        } else if (numCircles > 10000 && numCircles <= 100000) {
             color[index3] = .3f + .9f * randomFloat();
             color[index3+1] = .1f + .9f * randomFloat();
             color[index3+2] = .1f + .4f * randomFloat();
-        }
+	} else {
+	    color[index3] = .2f + .5f * randomFloat();
+            color[index3+1] = .5f + .5f * randomFloat();
+            color[index3+2] = .1f + .4f * randomFloat();
+	}
     }
 }
 
@@ -120,11 +125,15 @@ generateSizeCircles(
             color[index3] = .1f + .9f * randomFloat();
             color[index3+1] = .2f + .5f * randomFloat();
             color[index3+2] = .5f + .5f * randomFloat();
-        } else {
+        } else if (numCircles > 10000 && numCircles <= 100000) {
             color[index3] = .3f + .9f * randomFloat();
             color[index3+1] = .1f + .9f * randomFloat();
             color[index3+2] = .1f + .4f * randomFloat();
-        }
+        } else {
+	    color[index3] = .3f + .9f * randomFloat();
+            color[index3+1] = .1f + .3f * randomFloat();
+            color[index3+2] = .2f + .2f * randomFloat();
+	}
     }
 }
 
@@ -496,6 +505,32 @@ loadCircleScene(
         radius = new float[numCircles];
 
         generateRandomCircles(numCircles, position, velocity, color, radius);
+
+    } else if (sceneName == CIRCLE_TEST_1M) {
+
+        // test scene containing 1M randomily placed circles
+
+        numCircles = 1000 * 1000;
+
+        position = new float[3 * numCircles];
+        velocity = new float[3 * numCircles];
+        color = new float[3 * numCircles];
+        radius = new float[numCircles];
+
+        generateRandomCircles(numCircles, position, velocity, color, radius);
+
+    } else if (sceneName == MICRO_2M) {
+
+        // test scene containing 2M micro circles
+	const float RADIUS = .001f;
+        numCircles = 1000 * 1000 * 2;
+
+        position = new float[3 * numCircles];
+        velocity = new float[3 * numCircles];
+        color = new float[3 * numCircles];
+        radius = new float[numCircles];
+
+        generateSizeCircles(numCircles, position, velocity, color, radius, RADIUS);
 
     } else if (sceneName == PATTERN) {
 
