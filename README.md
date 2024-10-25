@@ -1,6 +1,6 @@
 # Assignment 3: A Simple CUDA Renderer #
 
-**Due:  Wed Nov 8, 11:59PM PST**
+**Due:  Thurs Nov 7, 11:59PM PST**
 
 **100 points total**
 
@@ -296,7 +296,7 @@ Score table:
 | rand1M          | 188.0086         | (F)             | 0               |
 | micro2M         | 355.9104         | (F)             | 0               |
 --------------------------------------------------------------------------
-|                                    | Total score:    | 0/96            |
+|                                    | Total score:    | 0/72            |
 --------------------------------------------------------------------------
 ~~~~
 
@@ -318,12 +318,12 @@ Aspects of your work that you should mention in the write-up include:
 ### Grading Guidelines ###
 
 * The write-up for the assignment is worth 7 points.
-* Your implementation is worth 72 points. These are equally divided into 12 points per scene as follows:
+* Your implementation is worth 72 points. These are equally divided into 9 points per scene as follows:
     - 2 correctness points per scene. 
-    - 10 performance points per scene (only obtainable if the solution is correct).  Your performance will be graded with respect to the performance of a provided benchmark reference renderer, T<sub>ref</sub>: 
+    - 7 performance points per scene (only obtainable if the solution is correct).  Your performance will be graded with respect to the performance of a provided benchmark reference renderer, T<sub>ref</sub>: 
         - No performance points will be given for solutions having time (T) 10 times the magnitude of T<sub>ref</sub>. 
-        - Full performance points will be given for solutions within 20% of the optimized solution ( T < 1.20 * T<sub>ref</sub> )
-        - For other values of T (for 1.20 T<sub>ref</sub> <= T < 10 * T<sub>ref</sub>), your performance score on a scale 1 to 10 will be calculated as: `10 * T_ref / T`.
+        - Full performance points will be given for solutions within 20% of the optimized solution ( T <= 1.20 * T<sub>ref</sub> )
+        - For other values of T (for 1.20 T<sub>ref</sub> < T < 10 * T<sub>ref</sub>), your performance score on a scale 1 to 7 will be calculated as: `7 * T_ref / T`.
 * Your implementation's performance on the class leaderboard is worth the final 6 points. Submission and grading details for the leaderboard will be detailed in a subsequent Ed post.
 
 * Up to five points extra credit (instructor discretion) for solutions that achieve significantly greater performance than required. Your write up must clearly explain your approach thoroughly.
