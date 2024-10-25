@@ -6,7 +6,7 @@ import shutil
 import re
 import math
 
-perf_pts = 10
+perf_pts = 7
 correctness_pts = 2
 
 #scene_names = ["rgb", "rgby", "rand10k", "rand100k", "biglittle", "littlebig", "pattern","bouncingballs", "hypnosis", "fireworks", "snow", "snowsingle", "rand1M", "micro2M"]
