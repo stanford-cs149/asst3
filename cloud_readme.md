@@ -22,7 +22,7 @@ The default AWS account level quota for GPU instances is 0, so many of you will 
 4. Search for `Deep Learning Base OSS Nvidia Driver GPU` and make sure to select `64-bit (Arm)`.
 ![alt text](handout/select-ami.png)
 
-4. Choose the `g5.xlarge` instance type.
+4. Choose the `g5g.xlarge` instance type.
 ![Instance type](handout/instance-type.png?raw=true)
 
 5. Change the size of the volume to 64 GB to accomodate the packages we will need to install to make the instance functional for the assignment:
