@@ -41,10 +41,10 @@ clean:
 		rm -rf $(OBJDIR) *.ppm *~ $(EXECUTABLE) $(LOGS)
 
 check_scan: default
-				./checker.pl scan
+				./checker.py scan
 
 check_find_repeats: default
-				./checker.pl find_repeats
+				./checker.py find_repeats
 
 $(EXECUTABLE): dirs $(OBJS)
 		$(CXX) $(CXXFLAGS) -o $@ $(OBJS) $(LDFLAGS)
