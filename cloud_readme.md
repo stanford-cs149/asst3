@@ -5,12 +5,9 @@ For performance testing, you will need to run this assignment on a VM instance o
 > [!NOTE]
 > Please don't forget to SHUT DOWN your instances when you're done for the day to avoid burning through credits overnight!
 
-## Applying for Quota ##
-The default AWS account level quota for GPU instances is 0, so many of you will not be able to actually launch a GPU instance unless you request an increase in your account-level quota. **Please follow the steps in [this document](https://docs.google.com/document/d/1NyiIvfKRCZG-ZLq4x1wukIdYg5FZoUZay_f1HSWUJ6I/edit?tab=t.0) to increase your account-level quota.** This process is fairly straightforward. After following the steps in the document, you will have submitted a quota increase ticket. You will be notified of this ticket creation by receiving an email to the email address associated with your AWS account. These tickets generally take several hours to process, and when they are approved you will receive an additional email to the email address that is associated with your AWS account. 
-
 ## Creating a VM ##
 
-1. Log in to the [AWS EC2 dashboard](https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#Home). On the top right of the page, switch the the region to the one you have applied quota for.
+1. Log in to the [AWS EC2 dashboard](https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#Home). On the top right of the page, make sure you are on the `us-east-1` region.
 ![Switch Region](handout/switch-region.png?raw=true)
 
 2. Now you're ready to create a VM instance. Click on the button that says `Launch instance`.
