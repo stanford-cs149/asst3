@@ -5,6 +5,7 @@ import os
 import re
 import sys
 import json
+import platform
 
 element_counts = ["1000000", "10000000", "20000000", "40000000"]
 
@@ -72,8 +73,12 @@ def run_tests():
         your_times[element_count] = get_time(student_cmd)
         print(f"Student Time: {your_times[element_count]}")
 
+        ref_binary = (
+            "cudaScan_ref_x86" if platform.machine() == "x86_64" else "cudaScan_ref"
+        )
+
         # Get reference time
-        ref_cmd = f"./cudaScan_ref -m {test} -i random -n {element_count} | tee ./logs/ref/{test}_time_{element_count}.log | grep 'Student GPU time:'"
+        ref_cmd = f"./{ref_binary} -m {test} -i random -n {element_count} | tee ./logs/ref/{test}_time_{element_count}.log | grep 'Student GPU time:'"
         fast_times[element_count] = get_time(ref_cmd)
         print(f"Ref Time: {fast_times[element_count]}")
 
