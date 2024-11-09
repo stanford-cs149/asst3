@@ -27,6 +27,28 @@ static inline int nextPow2(int n) {
     return n;
 }
 
+__global__ void scan_upsweep_kernel(int num_iter, int two_d, int two_dplus1, int* result) {
+    
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (index < num_iter) {
+        int i = index * two_dplus1;       
+        result[i+two_dplus1-1] += result[i+two_d-1];
+    }
+}
+
+__global__ void scan_downsweep_kernel(int num_iter, int two_d, int two_dplus1, int* result) {
+    
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (index < num_iter) {
+        int i = index * two_dplus1;
+        int t = result[i+two_d-1];
+        result[i+two_d-1] = result[i+two_dplus1-1];
+        result[i+two_dplus1-1] += t;
+    }
+}
+
 // exclusive_scan --
 //
 // Implementation of an exclusive scan on global memory array `input`,
@@ -54,7 +76,25 @@ void exclusive_scan(int* input, int N, int* result)
     // to CUDA kernel functions (that you must write) to implement the
     // scan.
 
+    // upsweep phase
+    for (int two_d = 1; two_d <= N/2; two_d*=2) {
+        int two_dplus1 = 2*two_d;
+        int num_iter = N / two_dplus1;
+        int blocks = (num_iter + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
 
+        scan_upsweep_kernel<<<blocks, THREADS_PER_BLOCK>>>(num_iter, two_d, two_dplus1, result);
+    }
+
+    result[N-1] = 0;
+
+    // downsweep phase
+    for (int two_d = N/2; two_d >= 1; two_d /= 2) {
+        int two_dplus1 = 2*two_d;
+        int num_iter = N / two_dplus1;
+        int blocks = (num_iter + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+
+        scan_downsweep_kernel<<<blocks, THREADS_PER_BLOCK>>>(num_iter, two_d, two_dplus1, result);
+    }
 }
 
 
