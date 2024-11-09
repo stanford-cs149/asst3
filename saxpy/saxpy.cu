@@ -15,8 +15,7 @@ float GBPerSec(int bytes, float sec) {
 
 // This is the CUDA "kernel" function that is run on the GPU.  You
 // know this because it is marked as a __global__ function.
-__global__ void
-saxpy_kernel(int N, float alpha, float* x, float* y, float* result) {
+__global__ void saxpy_kernel(int N, float alpha, float* x, float* y, float* result) {
 
     // compute overall thread index from position of thread in current
     // block, and given the block we are in (in this example only a 1D
@@ -95,12 +94,11 @@ void saxpyCuda(int N, float alpha, float* xarray, float* yarray, float* resultar
     saxpy_kernel<<<blocks, threadsPerBlock>>>(N, alpha, device_x, device_y, device_result);
     cudaDeviceSynchronize();
     double kernelEndTime = CycleTimer::currentSeconds();
+    double kernelTime = kernelEndTime-kernelStartTime;
     //
     // CS149 TODO: copy result from GPU back to CPU using cudaMemcpy
     //
-    cudaMemcpy(xarray, device_x, totalBytes / 3, cudaMemcpyDeviceToHost);
-    cudaMemcpy(yarray, device_y, totalBytes / 3, cudaMemcpyDeviceToHost);
-
+    cudaMemcpy(result, device_result, totalBytes / 3, cudaMemcpyDeviceToHost);
     
     // end timing after result has been copied back into host memory
     double endTime = CycleTimer::currentSeconds();
@@ -113,7 +111,7 @@ void saxpyCuda(int N, float alpha, float* xarray, float* yarray, float* resultar
 
     double overallDuration = endTime - startTime;
     printf("Effective BW by CUDA saxpy: %.3f ms\t\t[%.3f GB/s]\n", 1000.f * overallDuration, GBPerSec(totalBytes, overallDuration));
-
+    printf("Effective BW by CUDA saxpy (only kernel execution): %.3f ms\t\t[%.3f GB/s]\n", 1000.f * kernelTime);
     //
     // CS149 TODO: free memory buffers on the GPU using cudaFree
     //
