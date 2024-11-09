@@ -15,8 +15,7 @@ float GBPerSec(int bytes, float sec) {
 
 // This is the CUDA "kernel" function that is run on the GPU.  You
 // know this because it is marked as a __global__ function.
-__global__ void
-saxpy_kernel(int N, float alpha, float* x, float* y, float* result) {
+__global__ void saxpy_kernel(int N, float alpha, float* x, float* y, float* result) {
 
     // compute overall thread index from position of thread in current
     // block, and given the block we are in (in this example only a 1D
