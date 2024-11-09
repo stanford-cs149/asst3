@@ -27,13 +27,18 @@ static inline int nextPow2(int n) {
     return n;
 }
 
-__global__ void scan_upsweep_kernel(int num_iter, int two_d, int two_dplus1, int* result) {
+
+__global__ void scan_upsweep_kernel(int num_iter, int two_d, int two_dplus1, int* input, int* result) {
     
     int index = blockIdx.x * blockDim.x + threadIdx.x;
 
     if (index < num_iter) {
-        int i = index * two_dplus1;       
-        result[i+two_dplus1-1] += result[i+two_d-1];
+        int i = index * two_dplus1;
+        if (two_d == 1) {
+            result[i+two_dplus1-1] = input[i+two_d-1] + input[i+two_dplus1-1];
+        } else {
+            result[i+two_dplus1-1] += result[i+two_d-1];
+        }
     }
 }
 
@@ -64,8 +69,7 @@ __global__ void scan_downsweep_kernel(int num_iter, int two_d, int two_dplus1, i
 // Also, as per the comments in cudaScan(), you can implement an
 // "in-place" scan, since the timing harness makes a copy of input and
 // places it in result
-void exclusive_scan(int* input, int N, int* result)
-{
+void exclusive_scan(int* input, int N, int* result) {
 
     // CS149 TODO:
     //
@@ -82,7 +86,7 @@ void exclusive_scan(int* input, int N, int* result)
         int num_iter = N / two_dplus1;
         int blocks = (num_iter + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
 
-        scan_upsweep_kernel<<<blocks, THREADS_PER_BLOCK>>>(num_iter, two_d, two_dplus1, result);
+        scan_upsweep_kernel<<<blocks, THREADS_PER_BLOCK>>>(num_iter, two_d, two_dplus1, input, result);
     }
 
     result[N-1] = 0;
@@ -105,8 +109,8 @@ void exclusive_scan(int* input, int N, int* result)
 // implementation of scan - it copies the input to the GPU
 // and times the invocation of the exclusive_scan() function
 // above. Students should not modify it.
-double cudaScan(int* inarray, int* end, int* resultarray)
-{
+double cudaScan(int* inarray, int* end, int* resultarray) {
+
     int* device_result;
     int* device_input;
     int N = end - inarray;  
@@ -181,6 +185,54 @@ double cudaScanThrust(int* inarray, int* end, int* resultarray) {
 }
 
 
+__global__ void pair_equal_adjacent(int N, int* input, int* output) {
+    
+    __shared__ int input_copy[THREADS_PER_BLOCK + 1];
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (index < N - 1) {
+        int copy_index = threadIdx.x;
+
+        if (copy_index < THREADS_PER_BLOCK - 1) {
+            input_copy[copy_index] = input[index];
+        } else {
+            input_copy[copy_index] = input[index];
+            input_copy[copy_index + 1] = input[index + 1];
+        }
+
+        __sync_threads();
+
+        output[index] = (input_copy[copy_index] == input_copy[copy_index + 1]);
+    }
+}
+
+__global__ void update_pair_index(int N, int* input, int* output) {
+    
+    __shared__ int input_copy[THREADS_PER_BLOCK + 1];
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (index < N) {
+        int copy_index = threadIdx.x + 1;
+
+        if (copy_index == 1) {
+            input_copy[copy_index] = input[index];
+            if (index > 0) {
+                input_copy[copy_index - 1] = input[index - 1];
+            } else {
+                input_copy[copy_index - 1] = 0;
+            }
+        } else {
+            input_copy[copy_index] = input[index];
+        }
+
+        __sync_threads();
+
+        if (input_copy[copy_index] > input_copy[copy_index - 1]) {
+            output[input_copy[copy_index] - 1] = index - 1;
+        }
+    }
+}
+
 // find_repeats --
 //
 // Given an array of integers `device_input`, returns an array of all
@@ -201,7 +253,19 @@ int find_repeats(int* device_input, int length, int* device_output) {
     // must ensure that the results of find_repeats are correct given
     // the actual array length.
 
-    return 0; 
+    int blocks = (length + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+
+    // equal pair phase
+    pair_equal_adjacent<<<blocks, THREADS_PER_BLOCK>>>(length, device_input, device_output);
+
+    // exclusive scan phase
+    exclusive_scan(device_output, length, device_input);
+
+    // update output phase
+    int num_repeats = device_input[length - 1];
+    update_pair_index<<<blocks, THREADS_PER_BLOCK>>>(length, device_input, device_output);
+
+    return num_repeats;
 }
 
 
@@ -237,7 +301,6 @@ double cudaFindRepeats(int *input, int length, int *output, int *output_length) 
     float duration = endTime - startTime; 
     return duration;
 }
-
 
 
 void printCudaInfo()
