@@ -98,7 +98,7 @@ void saxpyCuda(int N, float alpha, float* xarray, float* yarray, float* resultar
     //
     // CS149 TODO: copy result from GPU back to CPU using cudaMemcpy
     //
-    cudaMemcpy(result, device_result, totalBytes / 3, cudaMemcpyDeviceToHost);
+    cudaMemcpy(resultarray, device_result, totalBytes / 3, cudaMemcpyDeviceToHost);
     
     // end timing after result has been copied back into host memory
     double endTime = CycleTimer::currentSeconds();
@@ -111,8 +111,7 @@ void saxpyCuda(int N, float alpha, float* xarray, float* yarray, float* resultar
 
     double overallDuration = endTime - startTime;
     printf("Effective BW by CUDA saxpy: %.3f ms\t\t[%.3f GB/s]\n", 1000.f * overallDuration, GBPerSec(totalBytes, overallDuration));
-    printf("Effective BW by CUDA saxpy (only kernel execution): %.3f ms\t\t[%.3f GB/s]\n", 1000.f * kernelTime);
-    //
+    printf("Effective BW by CUDA saxpy (kernel execution): %.3f ms\t\t[%.3f GB/s]\n", 1000.f * kernelTime, GBPerSec(totalBytes, kernelTime));
     // CS149 TODO: free memory buffers on the GPU using cudaFree
     //
     cudaFree(device_x);
