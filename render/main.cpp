@@ -164,6 +164,9 @@ int main(int argc, char** argv)
 
         // Check the correctness
         CheckBenchmark(ref_renderer, cuda_renderer, 0, 1, frameFilename);
+
+        delete ref_renderer;
+        delete cuda_renderer;
     }
     else {
 
@@ -182,6 +185,8 @@ int main(int argc, char** argv)
             glutInit(&argc, argv);
             startRendererWithDisplay(renderer);
         }
+
+        delete renderer;
     }
 
     return 0;
