@@ -30,12 +30,14 @@ void cpu_exclusive_scan(int* start, int* end, int* output) {
     // note to students: this C code can be helpful when debugging the
     // output of intermediate steps of your CUDA segmented scan.
     // Uncomment the line above to use it as a reference.
+    // before using this C code, make sure your N is power of 2
+    // or it will out-of-bounds access during downsweep phase.
   
     int N = end - start;
     memmove(output, start, N*sizeof(int));
     
     // upsweep phase
-    for (int twod = 1; twod < N/2; twod*=2) {
+    for (int twod = 1; twod <= N/2; twod*=2) {
         int twod1 = twod*2;
 	
         for (int i = 0; i < N; i += twod1) {
