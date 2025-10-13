@@ -4,7 +4,7 @@
 #include <cuda.h>
 
 #include "circleRenderer.h"
-#include "cycleTimer.h"
+#include "CycleTimer.h"
 #include "image.h"
 #include "ppm.h"
 

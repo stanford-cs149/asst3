@@ -1,7 +1,7 @@
 #include <algorithm>
 
 #include "circleRenderer.h"
-#include "cycleTimer.h"
+#include "CycleTimer.h"
 #include "image.h"
 #include "platformgl.h"
 

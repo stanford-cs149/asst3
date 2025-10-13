@@ -23,6 +23,7 @@
 #  include <time.h>
 #endif
 
+#include <chrono>
 
   // This uses the cycle counter of the processor.  Different
   // processors in the system will have different values for this.  If
@@ -71,11 +72,11 @@
     }
 
     //////////
-    // Return the current CPU time, in terms of seconds.
-    // This is slower than currentTicks().  Time zero is at
-    // some arbitrary point in the past.
+    // Return the current time in seconds with high resolution.
     static double currentSeconds() {
-      return currentTicks() * secondsPerTick();
+      using clock = std::chrono::steady_clock;
+      static const auto t0 = clock::now();
+      return std::chrono::duration<double>(clock::now() - t0).count();
     }
 
     //////////
