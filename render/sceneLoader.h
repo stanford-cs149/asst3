@@ -3,13 +3,7 @@
 
 #include "circleRenderer.h"
 
-void
-loadCircleScene(
-    SceneName sceneName,
-    int& numCircles,
-    float*& position,
-    float*& velocity,
-    float*& color,
-    float*& radius);
+void loadCircleScene(SceneName sceneName, int& numCircles, float*& position,
+                     float*& velocity, float*& color, float*& radius, int seed);
 
 #endif

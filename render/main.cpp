@@ -28,6 +28,7 @@ void usage(const char* progname) {
     printf("  -i  --interactive             Render output to interactive display\n");
     printf("  -f  --file  <FILENAME>        Output file name (FILENAME_xxxx.ppm) (default=output)\n");
     printf("  -?  --help                    This message\n");
+    printf("  -S  --Seed  <INT>             Random seed for scene generation (default=0)\n");
 }
 
 
@@ -44,6 +45,7 @@ int main(int argc, char** argv)
     bool useRefRenderer = false;
     bool checkCorrectness = false;
     bool interactiveMode = false;
+    int seed = 0;
     
     // parse commandline options ////////////////////////////////////////////
     int opt;
@@ -51,26 +53,27 @@ int main(int argc, char** argv)
         {"help",        0, 0,  '?'},
         {"check",       0, 0,  'c'},
         {"bench",       1, 0,  'b'},
-	{"interactive", 0, 0,  'i'},
+    	{"interactive", 0, 0,  'i'},
         {"file",        1, 0,  'f'},
         {"renderer",    1, 0,  'r'},
         {"size",        1, 0,  's'},
+        {"Seed",        1, 0,  'S'},
         {0 ,0, 0, 0}
     };
 
-    while ((opt = getopt_long(argc, argv, "b:f:r:s:ci?", long_options, NULL)) != EOF) {
-
+    while ((opt = getopt_long(argc, argv, "b:f:r:s:S:ci?", long_options, NULL)) != EOF) {
         switch (opt) {
         case 'b':
-            if (sscanf(optarg, "%d:%d", &benchmarkFrameStart, &benchmarkFrameEnd) != 2) {
-                fprintf(stderr, "Invalid argument to -b option\n");
-                usage(argv[0]);
-                exit(1);
+            if (sscanf(optarg, "%d:%d", &benchmarkFrameStart, &benchmarkFrameEnd) !=
+                2) {
+            fprintf(stderr, "Invalid argument to -b option\n");
+            usage(argv[0]);
+            exit(1);
             }
             break;
-	case 'i':
-   	    interactiveMode = true;
-	    break;
+        case 'i':
+            interactiveMode = true;
+            break;
         case 'c':
             checkCorrectness = true;
             break;
@@ -79,17 +82,20 @@ int main(int argc, char** argv)
             break;
         case 'r':
             if (std::string(optarg).compare("cuda") == 0) {
-                useRefRenderer = false;
+            useRefRenderer = false;
             } else if (std::string(optarg).compare("cpuref") == 0) {
-	      useRefRenderer = true;
-	    } else {
-	      fprintf(stderr, "ERROR: Unknown renderer type: %s\n", optarg);
-	      usage(argv[0]);
-	      return 1;
-	    }
+            useRefRenderer = true;
+            } else {
+            fprintf(stderr, "ERROR: Unknown renderer type: %s\n", optarg);
+            usage(argv[0]);
+            return 1;
+            }
             break;
         case 's':
             imageSize = atoi(optarg);
+            break;
+        case 'S':
+            seed = atoi(optarg);
             break;
         case '?':
         default:
@@ -156,10 +162,10 @@ int main(int argc, char** argv)
         cuda_renderer = new CudaRenderer();
 
         ref_renderer->allocOutputImage(imageSize, imageSize);
-        ref_renderer->loadScene(sceneName);
+        ref_renderer->loadScene(sceneName, seed);
         ref_renderer->setup();
         cuda_renderer->allocOutputImage(imageSize, imageSize);
-        cuda_renderer->loadScene(sceneName);
+        cuda_renderer->loadScene(sceneName, seed);
         cuda_renderer->setup();
 
         // Check the correctness
@@ -173,7 +179,7 @@ int main(int argc, char** argv)
             renderer = new CudaRenderer();
 
         renderer->allocOutputImage(imageSize, imageSize);
-        renderer->loadScene(sceneName);
+        renderer->loadScene(sceneName, seed);
         renderer->setup();
 
         if (!interactiveMode)

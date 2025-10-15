@@ -82,9 +82,9 @@ RefRenderer::clearImage() {
 }
 
 void
-RefRenderer::loadScene(SceneName scene) {
+RefRenderer::loadScene(SceneName scene, int seed) {
     sceneName = scene;
-    loadCircleScene(sceneName, numCircles, position, velocity, color, radius);
+    loadCircleScene(sceneName, numCircles, position, velocity, color, radius, seed);
 }
 
 // advanceAnimation --

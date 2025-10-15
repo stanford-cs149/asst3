@@ -35,7 +35,7 @@ public:
 
     virtual void setup() = 0;
 
-    virtual void loadScene(SceneName name) = 0;
+    virtual void loadScene(SceneName name, int seed = 0) = 0;
 
     virtual void allocOutputImage(int width, int height) = 0;
 

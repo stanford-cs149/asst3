@@ -26,7 +26,7 @@ public:
 
     void setup();
 
-    void loadScene(SceneName name);
+    void loadScene(SceneName name, int seed = 0);
 
     void allocOutputImage(int width, int height);
 

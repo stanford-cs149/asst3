@@ -53,9 +53,10 @@ generateRandomCircles(
     float* position,
     float* velocity,
     float* color,
-    float* radius) {
+    float* radius,
+    int seed) {
 
-    srand(0);
+    srand(seed);
     std::vector<float> depths(numCircles);
     for (int i=0; i<numCircles; i++) {
         depths[i] = randomFloat();
@@ -99,9 +100,10 @@ generateSizeCircles(
     float* velocity,
     float* color,
     float* radius,
-    float targetR) {
+    float targetR,
+    int seed) {
 
-    srand(0);
+    srand(seed);
     std::vector<float> depths(numCircles);
     for (int i=0; i<numCircles; i++) {
         depths[i] = randomFloat();
@@ -165,8 +167,10 @@ loadCircleScene(
     float*& position,
     float*& velocity,
     float*& color,
-    float*& radius)
+    float*& radius,
+    int seed)
 {
+    srand(seed);
 
     if (sceneName == SNOWFLAKES) {
 
@@ -183,7 +187,6 @@ loadCircleScene(
         color = new float[3 * numCircles];
         radius = new float[numCircles];
 
-        srand(0);
         std::vector<float> depths(numCircles);
 
         for (int i=0; i<numCircles; i++) {
@@ -219,8 +222,7 @@ loadCircleScene(
         }
 
     }else if (sceneName == BOUNCING_BALLS) {
-        srand(0);
-        numCircles = 10;   
+        numCircles = 10;
         position = new float[3 * numCircles]; 
         position = new float[3 * numCircles];
         velocity = new float[3 * numCircles];  
@@ -247,7 +249,6 @@ loadCircleScene(
             velocity[index3+2] = 0.f;
         }
     } else if (sceneName == HYPNOSIS) {
-        srand(0);  
         numCircles = 25; 
         position = new float[3 * numCircles]; 
         color = new float[3 * numCircles]; 
@@ -272,7 +273,6 @@ loadCircleScene(
             velocity[index3+2] = 0.0f; 
         }
     } else if (sceneName == FIREWORKS) {
-        srand(0); 
         const float pi = 3.14159;  
         numCircles = NUM_FIREWORKS + NUM_FIREWORKS * NUM_SPARKS;
 
@@ -457,7 +457,7 @@ loadCircleScene(
         color = new float[3 * numCircles];
         radius = new float[numCircles];
 
-        generateSizeCircles(numCircles, position, velocity, color, radius, BIG_RADIUS);
+        generateSizeCircles(numCircles, position, velocity, color, radius, BIG_RADIUS, seed);
         int startIdx = 9 * 1000;
         int changeNum = 1 * 1000;
         changeCircles(changeNum, (position+startIdx * 3), (radius+startIdx), MICRO_RADIUS, .85f, .1f);
@@ -475,7 +475,7 @@ loadCircleScene(
         color = new float[3 * numCircles];
         radius = new float[numCircles];
 
-        generateSizeCircles(numCircles, position, velocity, color, radius, BIG_RADIUS);
+        generateSizeCircles(numCircles, position, velocity, color, radius, BIG_RADIUS, seed);
         int startIdx = 9 * 1000;
         int changeNum = 1 * 1000;
         changeCircles(changeNum, (position+startIdx * 3), (radius+startIdx), MICRO_RADIUS, .05f, .1f);
@@ -491,7 +491,7 @@ loadCircleScene(
         color = new float[3 * numCircles];
         radius = new float[numCircles];
 
-        generateRandomCircles(numCircles, position, velocity, color, radius);
+        generateRandomCircles(numCircles, position, velocity, color, radius, seed);
 
     } else if (sceneName == CIRCLE_TEST_100K) {
 
@@ -504,7 +504,7 @@ loadCircleScene(
         color = new float[3 * numCircles];
         radius = new float[numCircles];
 
-        generateRandomCircles(numCircles, position, velocity, color, radius);
+        generateRandomCircles(numCircles, position, velocity, color, radius, seed);
 
     } else if (sceneName == CIRCLE_TEST_1M) {
 
@@ -517,7 +517,7 @@ loadCircleScene(
         color = new float[3 * numCircles];
         radius = new float[numCircles];
 
-        generateRandomCircles(numCircles, position, velocity, color, radius);
+        generateRandomCircles(numCircles, position, velocity, color, radius, seed);
 
     } else if (sceneName == MICRO_2M) {
 
@@ -530,7 +530,7 @@ loadCircleScene(
         color = new float[3 * numCircles];
         radius = new float[numCircles];
 
-        generateSizeCircles(numCircles, position, velocity, color, radius, RADIUS);
+        generateSizeCircles(numCircles, position, velocity, color, radius, RADIUS, seed);
 
     } else if (sceneName == PATTERN) {
 

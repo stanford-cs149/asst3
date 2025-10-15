@@ -6,7 +6,7 @@ import json
 import shutil
 import re
 import math
-
+import random
 
 perf_pts = 7
 correctness_pts = 2
@@ -58,9 +58,10 @@ def time_log_file(scene):
 
 #### RUNNING THE RENDERERS ####
 def check_correctness(render_cmd, scene):
-    cmd_string = "./%s -c %s -s 1024 -f logs/output > %s" % (
+    cmd_string = "./%s -c %s -s 1024 -S %d -f logs/output > %s" % (
         render_cmd,
         scene,
+        random.randint(0, 100000),
         correctness_log_file(scene),
     )
     # print("Checking correctness: %s" % cmd_string)
