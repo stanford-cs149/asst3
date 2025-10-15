@@ -60,9 +60,14 @@ warpScanInclusive(int threadIndex, uint idata, volatile uint *s_Data, uint size)
     s_Data[pos] = 0;
     pos += size;
     s_Data[pos] = idata;
+    __syncwarp();
 
-    for(uint offset = 1; offset < size; offset <<= 1)
-        s_Data[pos] += s_Data[pos - offset];
+    for(uint offset = 1; offset < size; offset <<= 1) {
+        uint val = s_Data[pos - offset];
+        __syncwarp();
+        s_Data[pos] += val;
+        __syncwarp();
+    }
 
     return s_Data[pos];
 }

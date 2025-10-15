@@ -485,9 +485,9 @@ CudaRenderer::getImage() {
 }
 
 void
-CudaRenderer::loadScene(SceneName scene) {
+CudaRenderer::loadScene(SceneName scene, int seed) {
     sceneName = scene;
-    loadCircleScene(sceneName, numCircles, position, velocity, color, radius);
+    loadCircleScene(sceneName, numCircles, position, velocity, color, radius, seed);
 }
 
 void
