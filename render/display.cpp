@@ -4,7 +4,7 @@
 #include "CycleTimer.h"
 #include "image.h"
 #include "platformgl.h"
-
+#include <cstdio>
 
 void renderPicture();
 
