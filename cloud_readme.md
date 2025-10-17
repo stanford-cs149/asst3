@@ -16,13 +16,13 @@ For performance testing, you will need to run this assignment on a VM instance o
 3. Click on `Browse more AMIs` AMI.
 ![Search AMI](handout/search-ami.png)
 
-4. Search for `Deep Learning Base OSS Nvidia Driver GPU` and make sure to select `64-bit (Arm)`.
+4. Search for `Deep Learning ARM64 Base OSS Nvidia Driver GPU AMI (Ubuntu 22.04) 20250613`.
 ![alt text](handout/select-ami.png)
 
 4. Choose the `g5g.xlarge` instance type.
 ![Instance type](handout/instance-type.png?raw=true)
 
-5. Change the size of the volume to 64 GB to accomodate the packages we will need to install to make the instance functional for the assignment:
+5. Change the size of the volume to 65 GiB to accomodate the packages we will need to install to make the instance functional for the assignment:
 ![Storage](handout/storage.png?raw=true)
 
 6. You will need a key pair to access your instance. In `Key pair (login)` section, click `Create a new key pair` and give it whatever name you'd like. This will download a keyfile to your computer called `<key_name>.pem` which you will use to login to the VM instance you are about to create. Finally, you can launch your instance.
