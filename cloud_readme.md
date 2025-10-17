@@ -17,20 +17,20 @@ For performance testing, you will need to run this assignment on a VM instance o
 ![Search AMI](handout/search-ami.png)
 
 4. Search for `Deep Learning ARM64 Base OSS Nvidia Driver GPU AMI (Ubuntu 22.04) 20250613`.
-![alt text](handout/select-ami.png)
+![alt text](handout/select-ami.jpeg)
 
 4. Choose the `g5g.xlarge` instance type.
 ![Instance type](handout/instance-type.png?raw=true)
 
 5. Change the size of the volume to 65 GiB to accomodate the packages we will need to install to make the instance functional for the assignment:
-![Storage](handout/storage.png?raw=true)
+![Storage](handout/storage.jpeg?raw=true)
 
 6. You will need a key pair to access your instance. In `Key pair (login)` section, click `Create a new key pair` and give it whatever name you'd like. This will download a keyfile to your computer called `<key_name>.pem` which you will use to login to the VM instance you are about to create. Finally, you can launch your instance.
 ![Key Pair Step 1](handout/keypair-step1.png)
 ![Key Pair Step 2](handout/keypair-step2.png)
 
 7. Confirm all details and launch instance  
-![Confirm](handout/confirm-launch.png)
+![Confirm](handout/confirm-launch.jpeg)
 
 8. Now that you've created your VM, you should be able to __SSH__ into it. You need the public IPv4 DNS name to SSH into it, which you can find by navigating to your instance's page and then clicking the `Connect` button, followed by selecting the SSH tab (note, it may take a moment for the instance to startup and be assigned an IP address):
 ![Connect](handout/connect.png?raw=true)
