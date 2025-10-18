@@ -56,17 +56,23 @@ warpScanInclusive(int threadIndex, uint idata, volatile uint *s_Data, uint size)
     // For example, (threadIndex & (size - 1)) computes threadIndex % size,
     // which works, assuming size is a power of 2.
 
+    const uint lane = threadIndex & 31;
+    unsigned full = __activemask();
+    unsigned mask = __ballot_sync(full, lane < size);
+    // If this lane doesn't participate, exit before any masked syncs
+    if ((mask & (1u << lane)) == 0) return 0;
+
     uint pos = 2 * threadIndex - (threadIndex & (size - 1));
     s_Data[pos] = 0;
     pos += size;
     s_Data[pos] = idata;
-    __syncwarp();
+    __syncwarp(mask);
 
     for(uint offset = 1; offset < size; offset <<= 1) {
         uint val = s_Data[pos - offset];
-        __syncwarp();
+        __syncwarp(mask);
         s_Data[pos] += val;
-        __syncwarp();
+        __syncwarp(mask);
     }
 
     return s_Data[pos];
