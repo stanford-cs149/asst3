@@ -1,6 +1,6 @@
 # Assignment 3: A Simple CUDA Renderer
 
-**Due: Fri Nov 8, 11:59PM PST**
+**Due: Thursday Oct 30, 11:59PM PST**
 
 **100 points total**
 
@@ -154,7 +154,7 @@ Scan Score Table:
 -------------------------------------------------------------------------
 ```
 
-This part of the assignment is largely about getting more practice with writing CUDA and thinking in a data parallel manner, and not about performance tuning code. Getting full performance points on this part of the assignment should not require much (or really any) performance tuning, just a direct port of the algorithm pseudocode to CUDA. However, there's one trick: a naive implementation of scan might launch N CUDA threads for each iteration of the parallel loops in the pseudocode, and using conditional execution in the kernel to determine which threads actually need to do work. Such a solution will not be performant! (Consider the last outmost loop iteration of the upsweep phase, where only two threads would do work!). A full credit solution will only launch one CUDA thread for each iteration of the innermost parallel loops.
+This part of the assignment is largely about getting more practice with writing CUDA and thinking in a data parallel manner, and not about performance tuning code. Getting full performance points on this part of the assignment should not require much (or really any) performance tuning, just a direct port of the algorithm pseudocode to CUDA. However, there's one trick: a naive implementation of scan might launch N CUDA threads for each iteration of the parallel loops in the pseudocode, and using conditional execution in the kernel to determine which threads actually need to do work. Such a solution will not be performant! (Consider the last outer-most loop iteration of the upsweep phase, where only two threads would do work!). A full credit solution will only launch one CUDA thread for each iteration of the innermost parallel loops.
 
 **Test Harness:** By default, the test harness runs on a pseudo-randomly generated array that is the same every time
 the program is run, in order to aid in debugging. You can pass the argument `-i random` to run on a random array - we
