@@ -325,7 +325,6 @@ Aspects of your work that you should mention in the write-up include:
     - No performance points will be given for solutions having time (T) 10 times the magnitude of T<sub>ref</sub>.
     - Full performance points will be given for solutions within 20% of the optimized solution ( T <= 1.20 \* T<sub>ref</sub> )
     - For other values of T (for 1.20 T<sub>ref</sub> < T < 10 _ T<sub>ref</sub>), your performance score on a scale 1 to 7 will be calculated as: `7 _ T_ref / T`.
-- Your implementation's performance on the class leaderboard is worth the final 6 points. Submission and grading details for the leaderboard will be detailed in a subsequent Ed post.
 
 - Up to five points extra credit (instructor discretion) for solutions that achieve significantly greater performance than required. Your write up must clearly explain your approach thoroughly.
 - Up to five points extra credit (instructor discretion) for a high-quality parallel CPU-only renderer implementation that achieves good utilization of all cores and SIMD vector units of the cores. Feel free to use any tools at your disposal (e.g., SIMD intrinsics, ISPC, pthreads). To receive credit you should analyze the performance of your GPU and CPU-based solutions and discuss the reasons for differences in implementation choices made.
@@ -334,9 +333,8 @@ So the total points for this project is as follows:
 
 - part 1 (5 points)
 - part 2 (10 points)
-- part 3 write up (7 points)
+- part 3 write up (13 points)
 - part 3 implementation (72 points)
-- part 3 leaderboard (6 points)
 - potential **extra** credit (up to 10 points)
 
 ## Assignment Tips and Hints
