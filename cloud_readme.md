@@ -16,7 +16,7 @@ For performance testing, you will need to run this assignment on a VM instance o
 3. Click on `Browse more AMIs` AMI.
 ![Search AMI](handout/search-ami.png)
 
-4. Search for `Deep Learning ARM64 Base OSS Nvidia Driver GPU AMI (Ubuntu 22.04) 20250613`.
+4. Search for `Deep Learning ARM64 Base OSS Nvidia Driver GPU AMI (Ubuntu 22.04) 20250613` (in the `Community AMIs` tab).
 ![alt text](handout/select-ami.jpeg)
 
 4. Choose the `g5g.xlarge` instance type.
