@@ -7,7 +7,7 @@ For performance testing, you will need to run this assignment on a VM instance o
 
 ## Creating a VM ##
 
-1. Log in to the [AWS EC2 dashboard](https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#Home). On the top right of the page, make sure you are on the `us-east-1` region.
+1. Log in to the [AWS EC2 dashboard](https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#Home). On the top right of the page, make sure you are on the same region that you requested the quota for (should be chosen randomly from `us-west-2`, `ap-northeast-1`, `ap-northeast-2`).
 ![Switch Region](handout/switch-region.png?raw=true)
 
 2. Now you're ready to create a VM instance. Click on the button that says `Launch instance`.
