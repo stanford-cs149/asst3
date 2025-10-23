@@ -46,25 +46,24 @@ ssh -i path/to/key_name.pem ubuntu@<public_dns_name>
 
 ## Setting up the VM environment ##
 
-1. CUDA should be by default installed. You can check the cuda version using `nvidia-smi` and see an output similar to the following. The CUDA version should be **12.4** and the GPU we are using is **NVIDIA T4G**.
+1. CUDA should be by default installed. You can check the cuda version using `nvidia-smi` and see an output similar to the following. The CUDA version should be **12.8** and the GPU we are using is **NVIDIA T4G**.
 ~~~~
-ubuntu@ip-172-31-32-141:~$ nvidia-smi
-Thu Oct 24 21:34:13 2024       
+$ nvidia-smi
+Thu Oct 23 18:22:32 2025
 +-----------------------------------------------------------------------------------------+
-| NVIDIA-SMI 550.127.05             Driver Version: 550.127.05     CUDA Version: 12.4     |
+| NVIDIA-SMI 570.133.20             Driver Version: 570.133.20     CUDA Version: 12.8     |
 |-----------------------------------------+------------------------+----------------------+
 | GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
 |                                         |                        |               MIG M. |
 |=========================================+========================+======================|
 |   0  NVIDIA T4G                     On  |   00000000:00:1F.0 Off |                    0 |
-| N/A   49C    P8             10W /   70W |       1MiB /  15360MiB |      0%      Default |
+| N/A   53C    P8             13W /   70W |       0MiB /  15360MiB |      0%      Default |
 |                                         |                        |                  N/A |
 +-----------------------------------------+------------------------+----------------------+
-                                                                                         
 +-----------------------------------------------------------------------------------------+
 | Processes:                                                                              |
-|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
 |        ID   ID                                                               Usage      |
 |=========================================================================================|
 |  No running processes found                                                             |
