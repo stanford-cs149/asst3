@@ -320,7 +320,7 @@ Aspects of your work that you should mention in the write-up include:
 
 - The write-up for the assignment is worth 7 points.
 - Your implementation is worth 72 points. These are equally divided into 9 points per scene as follows:
-  - 2 correctness points per scene. We will only test your program using images whose width and height are multiples of 256.
+  - 2 correctness points per scene. We will only test your program with image sizes that are multiples of 256.
   - 7 performance points per scene (only obtainable if the solution is correct). Your performance will be graded with respect to the performance of a provided benchmark reference renderer, T<sub>ref</sub>:
     - No performance points will be given for solutions having time (T) 10 times the magnitude of T<sub>ref</sub>.
     - Full performance points will be given for solutions within 20% of the optimized solution ( T <= 1.20 \* T<sub>ref</sub> )
